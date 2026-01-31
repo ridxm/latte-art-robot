@@ -116,6 +116,11 @@ dataset/
   - Cameras: top, left_wrist, right_wrist (480x640)
   - Observations: 12D [l_arm(6), r_arm(6)]
   - Output: `Data/` folder in LeRobot format
+- **Issue found**: Original scripts used ROS1 (rospy), robot has ROS2 Humble
+- **Solution**: Created ROS2 versions:
+  - `Hardware_Bridge_ROS2.py` - ROS2 hardware interface
+  - `collect_data_ros2.py` - ROS2 data collector
+- Installed dependencies: pyarrow, pandas, imageio, mediapy
 
 ## Robot Commands (On Robot via SSH)
 
@@ -124,12 +129,18 @@ dataset/
 ssh r2d3@172.20.10.5
 # password: 1234
 
-# Navigate to workspace
 cd ~/ros2_ws
 
-# Start data collection (kinesthetic teaching)
+# STEP 1: Launch arm drivers (in one terminal)
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 launch rm_driver dual_rm_65_driver.launch.py
+
+# STEP 2: Start data collection (in another terminal)
+source /opt/ros/humble/setup.bash
+source install/setup.bash
 cd src/daniel-teleop
-python3 collect_data.py
+python3 collect_data_ros2.py   # <-- USE ROS2 VERSION
 
 # Commands during collection:
 #   's' - Start new episode
@@ -137,6 +148,15 @@ python3 collect_data.py
 #   'n' - Discard current episode
 #   'q' - Quit
 
-# Upload to HuggingFace (edit repo_id first!)
+# STEP 3: Upload to HuggingFace (edit repo_id first!)
 python3 upload_to_hf.py
 ```
+
+## Files on Robot
+
+| File | Purpose |
+|------|---------|
+| `Hardware_Bridge_ROS2.py` | ROS2 bridge for dual Realman arms |
+| `collect_data_ros2.py` | ROS2 kinesthetic teaching collector |
+| `DataRecoder.py` | LeRobot v3 format recorder |
+| `upload_to_hf.py` | HuggingFace uploader |
