@@ -1,70 +1,70 @@
 # π0 Fine-tuning Configuration for Heart Latte Art
-# For use with OpenPi / LeRobot
+# LeRobot TrainPipelineConfig format
+#
+# Robot specs:
+#   - Dual Realman RM65 arms (12 DOF total: 6 left + 6 right)
+#   - 3 cameras: top, left_wrist, right_wrist (480x640 @ 10Hz)
+#   - Data captured at 10Hz
 
-# Model configuration
-model:
-  name: pi0
-  pretrained: lerobot/pi0_base
-
-# Dataset
+# Dataset configuration
 dataset:
-  repo_id: ${HF_USERNAME}/latte-heart-demos  # Replace with your HF username
-  episodes: null  # Use all episodes
+  repo_id: ${DATASET_REPO_ID}  # Set via env or CLI: --dataset.repo_id=username/latte-heart-demos
+  image_transforms:
+    enable: true
+    brightness_weight: 0.1
+    contrast_weight: 0.1
+    saturation_weight: 0.1
+    hue_weight: 0.05
+    max_num_transforms: 2
 
-# Training hyperparameters (optimized for H100)
-training:
-  batch_size: 32  # H100 can handle this
-  learning_rate: 1.0e-4
-  weight_decay: 1.0e-4
-  num_steps: 15000  # ~1.5 hours on H100
-
-  # Checkpointing
-  save_freq: 2500
-  eval_freq: 1000
-  log_freq: 100
-
-  # Optimizer
-  optimizer: adamw
-  warmup_steps: 500
-
-  # Gradient settings
-  grad_clip_norm: 1.0
-  mixed_precision: true  # bf16 on H100
-
-# Policy specific
+# Policy configuration (π0)
 policy:
-  # Action chunking
-  chunk_size: 50  # 50 actions at 50Hz = 1 second lookahead
+  path: lerobot/pi0_base
 
-  # Flow matching
-  num_flow_steps: 10
+  # Action chunking for 10Hz data
+  chunk_size: 10          # 10 actions = 1 second lookahead at 10Hz
+  n_action_steps: 10      # Execute all predicted actions
+  n_obs_steps: 1          # Single observation frame
 
-  # Input/Output
-  n_obs_steps: 2  # 2 observation frames
-  n_action_steps: 50  # Predict 50 actions
+  # H100 optimizations
+  dtype: bfloat16
+  compile_model: true
+  compile_mode: max-autotune
+  gradient_checkpointing: false  # H100 has enough memory
 
-# Observation configuration
-observation:
-  images:
-    wrist:
-      shape: [3, 480, 640]
-      type: rgb
-    overhead:
-      shape: [3, 480, 640]
-      type: rgb
-  state:
-    shape: [6]  # 6 joint positions
+  # Fine-tuning strategy
+  freeze_vision_encoder: false   # Train everything
+  train_expert_only: false
 
-# Action configuration
-action:
-  shape: [6]  # 6 joint targets
+  # Optimizer (π0 defaults)
+  optimizer_lr: 2.5e-5
+  optimizer_weight_decay: 0.01
+  optimizer_grad_clip_norm: 1.0
 
-# Normalization (computed from dataset)
-normalization:
-  mode: min_max
+  # Scheduler
+  scheduler_warmup_steps: 500
+  scheduler_decay_steps: 15000
 
-# Logging
+# Training configuration
+batch_size: 32            # H100 80GB can handle this
+steps: 15000              # ~1.5 hours on H100
+num_workers: 4
+
+# Checkpointing
+save_checkpoint: true
+save_freq: 2500           # Save every 2500 steps
+eval_freq: 5000           # Eval every 5000 steps (no sim env, just validation loss)
+log_freq: 100
+
+# Output
+output_dir: outputs/heart-latte-v1
+job_name: pi0-heart-latte
+
+# Weights & Biases
 wandb:
+  enable: true
   project: latte-art-robot
-  entity: null  # Your W&B username
-  name: pi0-heart-latte-v1
+  notes: "π0 fine-tuning for heart latte art on dual Realman arms"
+
+# Seed for reproducibility
+seed: 42

@@ -7,9 +7,10 @@
 ## Key Decisions
 
 ### Model Choice: π0 (Flow Matching VLA)
-- **Why**: Smooth 50Hz actions critical for fluid pouring
-- **Alternative considered**: ACT (backup if π0 has issues)
+- **Why**: Flow matching produces smooth action trajectories for fluid pouring
+- **Alternative considered**: ACT (backup script at `scripts/train_openpi.py`)
 - **Pre-trained base**: `lerobot/pi0_base`
+- **Inference**: 10Hz (matches data collection rate)
 
 ### Pattern: Heart Only
 - Simplified scope for hackathon
@@ -24,31 +25,58 @@
 ### Hardware Setup
 | Component | Choice | Notes |
 |-----------|--------|-------|
-| Robot | OpenDroid R2D3 | 6 DOF, SSH access |
-| Teleop | LeRobot-compatible wearable | No custom drivers needed |
-| GPU | H100 (cloud) | Fast training ~1-2 hours |
-| Cameras | Wrist + overhead | 30fps, 640x480 |
+| Robot | OpenDroid R2D3 | Dual Realman RM65 arms (12 DOF total) |
+| Teleop | Kinesthetic teaching | Direct arm manipulation via ROS2 |
+| GPU | H100 (VESSL.ai) | 80GB VRAM, bf16 training |
+| Cameras | 3x USB (top, left_wrist, right_wrist) | 10Hz, 640x480 |
 
 ### Framework Stack
-- **solo-cli**: Robot control & data recording
-- **LeRobot**: Dataset format & training pipelines
-- **OpenPi**: π0 fine-tuning
+- **LeRobot**: Dataset format, π0 policy, training pipeline
+- **VESSL.ai**: Cloud GPU training (H100)
 - **HuggingFace Hub**: Dataset & model hosting
+- **ROS2 Humble**: Robot control on R2D3
 
 ## File Structure
 ```
-configs/robot/r2d3.yaml      - Robot servo/camera config
-configs/policy/pi0_latte.yaml - Training hyperparameters
-scripts/record_demos.py       - Interactive demo recorder
-scripts/train_cloud.py        - Cloud training launcher
+Dockerfile                    - VESSL H100 training container
+vessl.yaml                    - VESSL run configuration
+configs/robot/r2d3.yaml       - Dual arm + 3 camera config
+configs/policy/pi0_latte.yaml - LeRobot training config
+scripts/train.py              - LeRobot training wrapper
+scripts/train_openpi.py       - OpenPi training (backup/alternative)
 scripts/deploy.py             - Inference on robot
 ```
 
-## Training Config
-- Batch size: 32 (H100)
-- Learning rate: 1e-4
-- Steps: 15,000
-- Checkpoint every: 2,500 steps
+## Training Setup (VESSL H100)
+
+### Quick Start
+```bash
+# 1. Set secrets in VESSL UI: hf-token, wandb-api-key
+
+# 2. Run training
+vessl run create -f vessl.yaml
+
+# Or run directly:
+python scripts/train.py --dataset.repo_id=username/latte-heart-demos
+```
+
+### Training Config
+| Parameter | Value | Notes |
+|-----------|-------|-------|
+| Batch size | 32 | H100 80GB handles this easily |
+| Learning rate | 2.5e-5 | π0 default |
+| Steps | 15,000 | ~1.5 hours on H100 |
+| Chunk size | 10 | 10 actions at 10Hz = 1s lookahead |
+| dtype | bfloat16 | H100 optimization |
+| Checkpoints | Every 2,500 steps | |
+
+### Key Dimensions
+| Data | Shape | Notes |
+|------|-------|-------|
+| State | 12D | [l_arm(6), r_arm(6)] |
+| Action | 12D | [l_arm(6), r_arm(6)] |
+| Images | 3x (480, 640, 3) | top, left_wrist, right_wrist |
+| Frequency | 10 Hz | Data collection rate |
 
 ## Git Commit Rules
 - **No co-authored lines** - Never include "Co-Authored-By" or "Generated with Claude" in commits
@@ -160,3 +188,15 @@ python3 upload_to_hf.py
 | `collect_data_ros2.py` | ROS2 kinesthetic teaching collector |
 | `DataRecoder.py` | LeRobot v3 format recorder |
 | `upload_to_hf.py` | HuggingFace uploader |
+
+### Session 4 (VESSL Training Setup)
+- Fixed training pipeline to use LeRobot (was incorrectly using OpenPi)
+- Created `Dockerfile` for VESSL H100 container
+- Created `vessl.yaml` with resource specs and secrets
+- Rewrote `scripts/train.py` as LeRobot wrapper
+- Updated configs to match actual robot:
+  - 12D state/action (dual arms)
+  - 3 cameras (top, left_wrist, right_wrist)
+  - 10Hz frequency (chunk_size=10)
+  - bf16 dtype for H100
+- Kept old OpenPi script as `scripts/train_openpi.py` backup

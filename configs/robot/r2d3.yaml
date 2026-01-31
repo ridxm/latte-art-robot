@@ -1,106 +1,89 @@
-# OpenDroid R2D3 Robot Configuration for LeRobot
-# 6-DOF robotic arm with Feetech-style servos
+# OpenDroid R2D3 Robot Configuration
+# Dual Realman RM65 arms with 3 cameras
 
 robot_type: r2d3
 robot_name: latte_pourer
 
-# Connection settings (via SSH to robot)
+# Connection settings
 connection:
-  type: ssh  # or serial if direct USB
-  host: "r2d3.local"  # Replace with actual IP/hostname
+  type: ssh
+  host: "172.20.10.5"
   port: 22
-  # For direct serial: port: "/dev/ttyUSB0"
+  user: r2d3
+  # password in env: R2D3_PASSWORD
 
-# Arm configuration (6 DOF)
-leader_arms:
-  main:
-    port: "/dev/ttyUSB0"  # Teleop leader arm port
-    motors:
-      shoulder_pan:
-        id: 1
-        model: sts3215
-        homing_offset: 0
-        drive_mode: 0
-      shoulder_lift:
-        id: 2
-        model: sts3215
-        homing_offset: 0
-        drive_mode: 0
-      elbow:
-        id: 3
-        model: sts3215
-        homing_offset: 0
-        drive_mode: 0
-      wrist_pitch:
-        id: 4
-        model: sts3215
-        homing_offset: 0
-        drive_mode: 0
-      wrist_roll:
-        id: 5
-        model: sts3215
-        homing_offset: 0
-        drive_mode: 0
-      gripper:
-        id: 6
-        model: sts3215
-        homing_offset: 0
-        drive_mode: 0
+# Dual arm configuration (12 DOF total)
+# Left arm: joints 0-5, Right arm: joints 6-11
+arms:
+  left:
+    type: realman_rm65
+    ip: "192.168.1.18"  # Left arm IP on robot's internal network
+    joints: 6
+    joint_names:
+      - l_shoulder_pan
+      - l_shoulder_lift
+      - l_elbow
+      - l_wrist_1
+      - l_wrist_2
+      - l_wrist_3
 
-follower_arms:
-  main:
-    port: "/dev/ttyUSB1"  # R2D3 follower arm port
-    motors:
-      shoulder_pan:
-        id: 1
-        model: sts3215
-        homing_offset: 0
-        drive_mode: 0
-      shoulder_lift:
-        id: 2
-        model: sts3215
-        homing_offset: 0
-        drive_mode: 0
-      elbow:
-        id: 3
-        model: sts3215
-        homing_offset: 0
-        drive_mode: 0
-      wrist_pitch:
-        id: 4
-        model: sts3215
-        homing_offset: 0
-        drive_mode: 0
-      wrist_roll:
-        id: 5
-        model: sts3215
-        homing_offset: 0
-        drive_mode: 0
-      gripper:
-        id: 6
-        model: sts3215
-        homing_offset: 0
-        drive_mode: 0
+  right:
+    type: realman_rm65
+    ip: "192.168.1.19"  # Right arm IP on robot's internal network
+    joints: 6
+    joint_names:
+      - r_shoulder_pan
+      - r_shoulder_lift
+      - r_elbow
+      - r_wrist_1
+      - r_wrist_2
+      - r_wrist_3
 
-# Camera configuration
+# Camera configuration (3 cameras)
 cameras:
-  wrist:
-    type: opencv
-    index: 0
-    fps: 30
+  top:
+    type: usb
+    device: /dev/video0
+    fps: 10
     width: 640
     height: 480
-  overhead:
-    type: opencv
-    index: 1
-    fps: 30
+    key: observation.images.top
+
+  left_wrist:
+    type: usb
+    device: /dev/video2
+    fps: 10
     width: 640
     height: 480
+    key: observation.images.left_wrist
+
+  right_wrist:
+    type: usb
+    device: /dev/video4
+    fps: 10
+    width: 640
+    height: 480
+    key: observation.images.right_wrist
 
 # Control settings
 control:
-  fps: 30  # Control frequency
-  max_relative_target: null
+  fps: 10  # Match data collection rate
+  state_dim: 12  # 6 joints per arm × 2 arms
+  action_dim: 12
 
-# Calibration file (generated after calibration)
-calibration_dir: ~/.cache/lerobot/calibration/r2d3
+# Observation/Action keys (must match dataset)
+observation_keys:
+  state: observation.state  # 12D: [l_arm(6), r_arm(6)]
+  images:
+    - observation.images.top
+    - observation.images.left_wrist
+    - observation.images.right_wrist
+
+action_key: action  # 12D: [l_arm(6), r_arm(6)]
+
+# ROS2 topics (on robot)
+ros2:
+  left_arm_state: /left_arm/joint_states
+  right_arm_state: /right_arm/joint_states
+  left_arm_command: /left_arm/joint_commands
+  right_arm_command: /right_arm/joint_commands
