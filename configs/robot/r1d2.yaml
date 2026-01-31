@@ -1,0 +1,106 @@
+# OpenDroid R1D2 Robot Configuration for LeRobot
+# 6-DOF robotic arm with Feetech-style servos
+
+robot_type: r1d2
+robot_name: latte_pourer
+
+# Connection settings (via SSH to robot)
+connection:
+  type: ssh  # or serial if direct USB
+  host: "r1d2.local"  # Replace with actual IP/hostname
+  port: 22
+  # For direct serial: port: "/dev/ttyUSB0"
+
+# Arm configuration (6 DOF)
+leader_arms:
+  main:
+    port: "/dev/ttyUSB0"  # Teleop leader arm port
+    motors:
+      shoulder_pan:
+        id: 1
+        model: sts3215
+        homing_offset: 0
+        drive_mode: 0
+      shoulder_lift:
+        id: 2
+        model: sts3215
+        homing_offset: 0
+        drive_mode: 0
+      elbow:
+        id: 3
+        model: sts3215
+        homing_offset: 0
+        drive_mode: 0
+      wrist_pitch:
+        id: 4
+        model: sts3215
+        homing_offset: 0
+        drive_mode: 0
+      wrist_roll:
+        id: 5
+        model: sts3215
+        homing_offset: 0
+        drive_mode: 0
+      gripper:
+        id: 6
+        model: sts3215
+        homing_offset: 0
+        drive_mode: 0
+
+follower_arms:
+  main:
+    port: "/dev/ttyUSB1"  # R1D2 follower arm port
+    motors:
+      shoulder_pan:
+        id: 1
+        model: sts3215
+        homing_offset: 0
+        drive_mode: 0
+      shoulder_lift:
+        id: 2
+        model: sts3215
+        homing_offset: 0
+        drive_mode: 0
+      elbow:
+        id: 3
+        model: sts3215
+        homing_offset: 0
+        drive_mode: 0
+      wrist_pitch:
+        id: 4
+        model: sts3215
+        homing_offset: 0
+        drive_mode: 0
+      wrist_roll:
+        id: 5
+        model: sts3215
+        homing_offset: 0
+        drive_mode: 0
+      gripper:
+        id: 6
+        model: sts3215
+        homing_offset: 0
+        drive_mode: 0
+
+# Camera configuration
+cameras:
+  wrist:
+    type: opencv
+    index: 0
+    fps: 30
+    width: 640
+    height: 480
+  overhead:
+    type: opencv
+    index: 1
+    fps: 30
+    width: 640
+    height: 480
+
+# Control settings
+control:
+  fps: 30  # Control frequency
+  max_relative_target: null
+
+# Calibration file (generated after calibration)
+calibration_dir: ~/.cache/lerobot/calibration/r1d2
