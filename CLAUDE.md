@@ -1,7 +1,7 @@
 # CLAUDE.md - Project Context & Decisions
 
 ## Project Overview
-**Goal**: Robot that pours heart latte art using OpenDroid R1D2 + π0 VLA
+**Goal**: Robot that pours heart latte art using OpenDroid R2D3 + π0 VLA
 **Timeline**: 12-hour hackathon
 
 ## Key Decisions
@@ -24,7 +24,7 @@
 ### Hardware Setup
 | Component | Choice | Notes |
 |-----------|--------|-------|
-| Robot | OpenDroid R1D2 | 6 DOF, SSH access |
+| Robot | OpenDroid R2D3 | 6 DOF, SSH access |
 | Teleop | LeRobot-compatible wearable | No custom drivers needed |
 | GPU | H100 (cloud) | Fast training ~1-2 hours |
 | Cameras | Wrist + overhead | 30fps, 640x480 |
@@ -37,7 +37,7 @@
 
 ## File Structure
 ```
-configs/robot/r1d2.yaml      - Robot servo/camera config
+configs/robot/r2d3.yaml      - Robot servo/camera config
 configs/policy/pi0_latte.yaml - Training hyperparameters
 scripts/record_demos.py       - Interactive demo recorder
 scripts/train_cloud.py        - Cloud training launcher
@@ -55,13 +55,13 @@ scripts/deploy.py             - Inference on robot
 - Keep commit messages short and descriptive
 
 ## Open Questions
-- [x] R1D2 servo protocol → **Realman arms** (RM65/RM75 series)
+- [x] R2D3 servo protocol → **Realman arms** (RM65/RM75 series)
 - [ ] Exact camera mounting positions
 - [ ] Creamer vessel specs (spout angle matters)
 
 ## Data Format Issue (CRITICAL)
 
-**Problem**: OpenDroid R1D2 uses Realman arms which don't output LeRobot format natively.
+**Problem**: OpenDroid R2D3 uses Realman arms which don't output LeRobot format natively.
 
 **Solution**: Custom data capture + conversion pipeline:
 1. Capture from Realman Python SDK (`Robotic_Arm` package)
@@ -100,7 +100,7 @@ dataset/
 - Simplified to heart pattern only for hackathon scope
 
 ### Session 2 (Data Pipeline)
-- Discovered R1D2 uses Realman arms (RM65/RM75 series)
+- Discovered R2D3 uses Realman arms (RM65/RM75 series)
 - Initially thought we needed custom converter
 - Created `realman_recorder.py` and `convert_to_lerobot.py` (may not be needed)
 
@@ -108,9 +108,9 @@ dataset/
 - SSH: `ssh r2d3@172.20.10.5` (pass: 1234)
 - Working dir: `~/ros2_ws`
 - **GOOD NEWS**: Robot already has LeRobot format data collection!
-  - `src/daniel-teleop/collect_data.py` - kinesthetic teaching collector
-  - `src/daniel-teleop/DataRecoder.py` - outputs LeRobot v3 format
-  - `src/daniel-teleop/upload_to_hf.py` - uploads to HuggingFace
+  - `src/teleop/collect_data.py` - kinesthetic teaching collector
+  - `src/teleop/DataRecoder.py` - outputs LeRobot v3 format
+  - `src/teleop/upload_to_hf.py` - uploads to HuggingFace
 - Data collection settings:
   - Rate: 10 Hz
   - Cameras: top, left_wrist, right_wrist (480x640)
@@ -139,7 +139,7 @@ ros2 launch rm_driver dual_rm_65_driver.launch.py
 # STEP 2: Start data collection (in another terminal)
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-cd src/daniel-teleop
+cd src/teleop
 python3 collect_data_ros2.py   # <-- USE ROS2 VERSION
 
 # Commands during collection:

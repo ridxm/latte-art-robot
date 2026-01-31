@@ -1,13 +1,13 @@
-# OpenDroid R1D2 Robot Configuration for LeRobot
+# OpenDroid R2D3 Robot Configuration for LeRobot
 # 6-DOF robotic arm with Feetech-style servos
 
-robot_type: r1d2
+robot_type: r2d3
 robot_name: latte_pourer
 
 # Connection settings (via SSH to robot)
 connection:
   type: ssh  # or serial if direct USB
-  host: "r1d2.local"  # Replace with actual IP/hostname
+  host: "r2d3.local"  # Replace with actual IP/hostname
   port: 22
   # For direct serial: port: "/dev/ttyUSB0"
 
@@ -49,7 +49,7 @@ leader_arms:
 
 follower_arms:
   main:
-    port: "/dev/ttyUSB1"  # R1D2 follower arm port
+    port: "/dev/ttyUSB1"  # R2D3 follower arm port
     motors:
       shoulder_pan:
         id: 1
@@ -103,4 +103,4 @@ control:
   max_relative_target: null
 
 # Calibration file (generated after calibration)
-calibration_dir: ~/.cache/lerobot/calibration/r1d2
+calibration_dir: ~/.cache/lerobot/calibration/r2d3

@@ -1,6 +1,6 @@
 # Heart Latte Art Robot 🎨☕
 
-Pour beautiful heart patterns in latte art using OpenDroid R1D2 + π0 VLA.
+Pour beautiful heart patterns in latte art using OpenDroid R2D3 + π0 VLA.
 
 ## Quick Start (12-Hour Hackathon)
 
@@ -11,7 +11,7 @@ Pour beautiful heart patterns in latte art using OpenDroid R1D2 + π0 VLA.
 pip install solo-cli lerobot torch
 
 # 2. Connect to robot
-ssh r1d2@<robot-ip>
+ssh r2d3@<robot-ip>
 
 # 3. Calibrate
 solo robo --calibrate all
@@ -55,7 +55,7 @@ python scripts/deploy.py --checkpoint checkpoints/heart-latte-v1/final
 ```
 Latte-Pouring-Art/
 ├── configs/
-│   ├── robot/r1d2.yaml       # Robot configuration
+│   ├── robot/r2d3.yaml       # Robot configuration
 │   └── policy/pi0_latte.yaml # Training config
 ├── scripts/
 │   ├── record_demos.py       # Demo recording
@@ -67,7 +67,7 @@ Latte-Pouring-Art/
 
 ## Hardware Requirements
 
-- **Robot**: OpenDroid R1D2 (6 DOF)
+- **Robot**: OpenDroid R2D3 (6 DOF)
 - **Teleop**: LeRobot-compatible wearable kit
 - **Cameras**: Wrist + overhead (30fps, 640x480)
 - **GPU**: H100 (cloud) for training
