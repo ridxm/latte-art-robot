@@ -1,0 +1,21 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from rm_ros_interfaces/msg/Armoriginalstate.msg
+// generated code does not contain a copyright notice
+
+
+module rm_ros_interfaces {
+  module msg {
+    typedef float float__6[6];
+    struct Armoriginalstate {
+      sequence<float> joint;
+
+      float__6 pose;
+
+      uint16 arm_err;
+
+      uint16 sys_err;
+
+      uint8 dof;
+    };
+  };
+};

@@ -1,0 +1,20 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from rm_ros_interfaces/msg/Setforceposition.msg
+// generated code does not contain a copyright notice
+
+
+module rm_ros_interfaces {
+  module msg {
+    struct Setforceposition {
+      uint8 sensor;
+
+      uint8 mode;
+
+      uint8 direction;
+
+      int16 n;
+
+      boolean block;
+    };
+  };
+};

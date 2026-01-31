@@ -1,0 +1,21 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from rm_ros_interfaces/msg/Movel.msg
+// generated code does not contain a copyright notice
+
+#include "geometry_msgs/msg/Pose.idl"
+
+module rm_ros_interfaces {
+  module msg {
+    struct Movel {
+      geometry_msgs::msg::Pose pose;
+
+      uint8 speed;
+
+      @verbatim (language="comment", text=
+        "0 代表立即规划，1 代表和下一条轨迹一起规划，当为 1 时，轨迹不会立即执行")
+      uint8 trajectory_connect;
+
+      boolean block;
+    };
+  };
+};

@@ -1,0 +1,26 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from rm_ros_interfaces/msg/Gripperpick.msg
+// generated code does not contain a copyright notice
+
+
+module rm_ros_interfaces {
+  module msg {
+    @verbatim (language="comment", text=
+      "手爪以设定的速度力控夹取，当受力超过设定力后，停止运动")
+    struct Gripperpick {
+      @verbatim (language="comment", text=
+        "1~1000,代表手爪开合速度，无量纲")
+      uint16 speed;
+
+      @verbatim (language="comment", text=
+        "1～1000,代表手爪夹持力，最大1.5kg")
+      uint16 force;
+
+      boolean block;
+
+      @verbatim (language="comment", text=
+        "timeout 设置返回超时时间，阻塞模式生效")
+      uint16 timeout;
+    };
+  };
+};

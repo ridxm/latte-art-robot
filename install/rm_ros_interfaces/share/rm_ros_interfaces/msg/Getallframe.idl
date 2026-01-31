@@ -1,0 +1,13 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from rm_ros_interfaces/msg/Getallframe.msg
+// generated code does not contain a copyright notice
+
+
+module rm_ros_interfaces {
+  module msg {
+    typedef string string__10[10];
+    struct Getallframe {
+      string__10 frame_name;
+    };
+  };
+};

@@ -1,0 +1,2 @@
+source;share/servo_driver/environment/ament_prefix_path.sh
+source;share/servo_driver/environment/path.sh

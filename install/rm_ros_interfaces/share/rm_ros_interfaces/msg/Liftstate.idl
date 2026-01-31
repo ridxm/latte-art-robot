@@ -1,0 +1,26 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from rm_ros_interfaces/msg/Liftstate.msg
+// generated code does not contain a copyright notice
+
+
+module rm_ros_interfaces {
+  module msg {
+    struct Liftstate {
+      @verbatim (language="comment", text=
+        "当前高度")
+      int16 height;
+
+      @verbatim (language="comment", text=
+        "当前电流")
+      int16 current;
+
+      @verbatim (language="comment", text=
+        "驱动错误代码")
+      uint16 err_flag;
+
+      @verbatim (language="comment", text=
+        "当前升降状态，0-空闲，1-正方向速度运动，2-正方向位置运动，3-负方向速度运动，4-负方向位置运动")
+      int16 mode;
+    };
+  };
+};

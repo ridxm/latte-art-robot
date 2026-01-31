@@ -1,0 +1,11 @@
+python-dotenv
+langgraph
+langchain-core
+langchain-openai
+langchain-community
+langchain-chroma
+requests
+pyaudio
+pyttsx3
+openai
+python-dotenv

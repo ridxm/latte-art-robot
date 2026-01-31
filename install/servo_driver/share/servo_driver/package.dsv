@@ -1,0 +1,8 @@
+source;share/servo_driver/hook/cmake_prefix_path.ps1
+source;share/servo_driver/hook/cmake_prefix_path.dsv
+source;share/servo_driver/hook/cmake_prefix_path.sh
+source;share/servo_driver/local_setup.bash
+source;share/servo_driver/local_setup.dsv
+source;share/servo_driver/local_setup.ps1
+source;share/servo_driver/local_setup.sh
+source;share/servo_driver/local_setup.zsh

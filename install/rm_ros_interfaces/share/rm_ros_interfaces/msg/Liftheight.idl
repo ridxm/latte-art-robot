@@ -1,0 +1,22 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from rm_ros_interfaces/msg/Liftheight.msg
+// generated code does not contain a copyright notice
+
+
+module rm_ros_interfaces {
+  module msg {
+    @verbatim (language="comment", text=
+      "升降机构运行到指定高度")
+    struct Liftheight {
+      @verbatim (language="comment", text=
+        "目标高度，单位 mm，范围：0~2600")
+      uint16 height;
+
+      @verbatim (language="comment", text=
+        "速度百分比，1~100")
+      uint16 speed;
+
+      boolean block;
+    };
+  };
+};

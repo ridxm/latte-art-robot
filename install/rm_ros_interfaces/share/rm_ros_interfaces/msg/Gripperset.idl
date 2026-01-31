@@ -1,0 +1,22 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from rm_ros_interfaces/msg/Gripperset.msg
+// generated code does not contain a copyright notice
+
+
+module rm_ros_interfaces {
+  module msg {
+    @verbatim (language="comment", text=
+      "设置手爪到固定位置，手爪到位置后或者所受力超过阈值后停止")
+    struct Gripperset {
+      @verbatim (language="comment", text=
+        "手爪目标位置，范围：1～1000,代表手爪开口度：0～70mm")
+      uint16 position;
+
+      boolean block;
+
+      @verbatim (language="comment", text=
+        "timeout 设置返回超时时间，阻塞模式生效")
+      uint16 timeout;
+    };
+  };
+};

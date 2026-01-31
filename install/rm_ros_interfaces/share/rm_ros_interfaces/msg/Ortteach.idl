@@ -1,0 +1,34 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from rm_ros_interfaces/msg/Ortteach.msg
+// generated code does not contain a copyright notice
+
+
+module rm_ros_interfaces {
+  module msg {
+    @verbatim (language="comment", text=
+      "ORT_TEACH_MODES type   # 示教类型" "\n"
+      "typedef enum" "\n"
+      "{" "\n"
+      "    RX_Rotate = 0,       //RX轴方向" "\n"
+      "    RY_Rotate = 1,       //RY轴方向" "\n"
+      "    RZ_Rotate = 2,       //RZ轴方向" "\n"
+      "}ORT_TEACH_MODES;")
+    struct Ortteach {
+      @verbatim (language="comment", text=
+        "示教类型 输入0 | 1 | 2")
+      uint8 type;
+
+      @verbatim (language="comment", text=
+        "示教方向，0-负方向，1-正方向")
+      uint8 direction;
+
+      @verbatim (language="comment", text=
+        "速度比例1~100，即规划速度和加速度占机械臂末端最大角速度和角加速度的百分比")
+      uint8 speed;
+
+      @verbatim (language="comment", text=
+        "RM_NONBLOCK0-非阻塞，发送后立即返回；RM_BLOCK1-阻塞，等待控制器返回设置成功指令")
+      boolean block;
+    };
+  };
+};

@@ -1,0 +1,19 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from rm_ros_interfaces/msg/Liftspeed.msg
+// generated code does not contain a copyright notice
+
+
+module rm_ros_interfaces {
+  module msg {
+    @verbatim (language="comment", text=
+      "升降机构速度开环控制" "\n"
+      "Speed < 0:升降机构向下运动" "\n"
+      "Speed > 0:升降机构向上运动" "\n"
+      "Speed = 0:升降机构停止运动")
+    struct Liftspeed {
+      @verbatim (language="comment", text=
+        "速度百分比，-100~100")
+      int16 speed;
+    };
+  };
+};

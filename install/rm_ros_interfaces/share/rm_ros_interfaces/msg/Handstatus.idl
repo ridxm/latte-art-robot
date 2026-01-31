@@ -1,0 +1,31 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from rm_ros_interfaces/msg/Handstatus.msg
+// generated code does not contain a copyright notice
+
+
+module rm_ros_interfaces {
+  module msg {
+    typedef uint16 uint16__6[6];
+    struct Handstatus {
+      @verbatim (language="comment", text=
+        "手指角度数组，范围：0~2000.")
+      uint16__6 hand_angle;
+
+      @verbatim (language="comment", text=
+        "手指位置数组，范围：0~1000.")
+      uint16__6 hand_pos;
+
+      @verbatim (language="comment", text=
+        "手指状态,0正在松开，1正在抓取，2位置到位停止，3力到位停止，5电流保护停止，6电缸堵转停止，7电缸故障停止")
+      uint16__6 hand_state;
+
+      @verbatim (language="comment", text=
+        "灵巧手自由度电流，单位mN")
+      uint16__6 hand_force;
+
+      @verbatim (language="comment", text=
+        "灵巧手系统错误，1表示有错误，0表示无错误")
+      uint16 hand_err;
+    };
+  };
+};

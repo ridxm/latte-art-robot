@@ -1,0 +1,20 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from rm_ros_interfaces/msg/Jointerrclear.msg
+// generated code does not contain a copyright notice
+
+
+module rm_ros_interfaces {
+  module msg {
+    @verbatim (language="comment", text=
+      "对指定关节进行使能操作")
+    struct Jointerrclear {
+      @verbatim (language="comment", text=
+        "对应关节序号，从基座到机械臂手爪端，序号依次为1～6")
+      uint8 joint_num;
+
+      @verbatim (language="comment", text=
+        "true-阻塞，false-不阻塞")
+      boolean block;
+    };
+  };
+};

@@ -1,0 +1,103 @@
+W: Target Packages (main/binary-arm64/Packages) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Packages (main/binary-all/Packages) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-en_US) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-en) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-zh_CN) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11 (main/dep11/Components-arm64.yml) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11 (main/dep11/Components-all.yml) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons-small (main/dep11/icons-48x48.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons (main/dep11/icons-64x64.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons-hidpi (main/dep11/icons-64x64@2.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Packages (main/binary-arm64/Packages) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Packages (main/binary-all/Packages) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-en_US) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-en) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-zh_CN) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11 (main/dep11/Components-arm64.yml) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11 (main/dep11/Components-all.yml) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons-small (main/dep11/icons-48x48.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons (main/dep11/icons-64x64.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons-hidpi (main/dep11/icons-64x64@2.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Packages (main/binary-arm64/Packages) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Packages (main/binary-all/Packages) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-en_US) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-en) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-zh_CN) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11 (main/dep11/Components-arm64.yml) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11 (main/dep11/Components-all.yml) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons-small (main/dep11/icons-48x48.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons (main/dep11/icons-64x64.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons-hidpi (main/dep11/icons-64x64@2.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+debconf: delaying package configuration, since apt-utils is not installed
+W: Target Packages (main/binary-arm64/Packages) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Packages (main/binary-all/Packages) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-en_US) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-en) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-zh_CN) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11 (main/dep11/Components-arm64.yml) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11 (main/dep11/Components-all.yml) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons-small (main/dep11/icons-48x48.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons (main/dep11/icons-64x64.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons-hidpi (main/dep11/icons-64x64@2.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Packages (main/binary-arm64/Packages) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Packages (main/binary-all/Packages) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-en_US) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-en) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-zh_CN) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11 (main/dep11/Components-arm64.yml) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11 (main/dep11/Components-all.yml) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons-small (main/dep11/icons-48x48.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons (main/dep11/icons-64x64.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons-hidpi (main/dep11/icons-64x64@2.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Packages (main/binary-arm64/Packages) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Packages (main/binary-all/Packages) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-en_US) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-en) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-zh_CN) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11 (main/dep11/Components-arm64.yml) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11 (main/dep11/Components-all.yml) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons-small (main/dep11/icons-48x48.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons (main/dep11/icons-64x64.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons-hidpi (main/dep11/icons-64x64@2.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Packages (main/binary-arm64/Packages) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Packages (main/binary-all/Packages) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-en_US) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-en) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-zh_CN) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11 (main/dep11/Components-arm64.yml) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11 (main/dep11/Components-all.yml) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons-small (main/dep11/icons-48x48.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons (main/dep11/icons-64x64.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons-hidpi (main/dep11/icons-64x64@2.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+debconf: delaying package configuration, since apt-utils is not installed
+debconf: delaying package configuration, since apt-utils is not installed
+debconf: delaying package configuration, since apt-utils is not installed
+debconf: delaying package configuration, since apt-utils is not installed
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+
+[notice] A new release of pip is available: 24.0 -> 25.0.1
+[notice] To update, run: python3 -m pip install --upgrade pip
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+
+[notice] A new release of pip is available: 24.0 -> 25.0.1
+[notice] To update, run: python3 -m pip install --upgrade pip
+W: Target Packages (main/binary-arm64/Packages) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Packages (main/binary-all/Packages) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-en_US) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-en) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-zh_CN) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11 (main/dep11/Components-arm64.yml) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11 (main/dep11/Components-all.yml) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons-small (main/dep11/icons-48x48.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons (main/dep11/icons-64x64.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons-hidpi (main/dep11/icons-64x64@2.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Packages (main/binary-arm64/Packages) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Packages (main/binary-all/Packages) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-en_US) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-en) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target Translations (main/i18n/Translation-zh_CN) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11 (main/dep11/Components-arm64.yml) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11 (main/dep11/Components-all.yml) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons-small (main/dep11/icons-48x48.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons (main/dep11/icons-64x64.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2
+W: Target DEP-11-icons-hidpi (main/dep11/icons-64x64@2.tar) is configured multiple times in /etc/apt/sources.list.d/realman_ros2.list:2 and /etc/apt/sources.list.d/ros-fish.list:2

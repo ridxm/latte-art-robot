@@ -1,0 +1,22 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from rm_ros_interfaces/msg/Sixforce.msg
+// generated code does not contain a copyright notice
+
+
+module rm_ros_interfaces {
+  module msg {
+    struct Sixforce {
+      float force_fx;
+
+      float force_fy;
+
+      float force_fz;
+
+      float force_mx;
+
+      float force_my;
+
+      float force_mz;
+    };
+  };
+};

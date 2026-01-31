@@ -1,0 +1,20 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from servo_interfaces/msg/ServoMove.msg
+// generated code does not contain a copyright notice
+
+
+module servo_interfaces {
+  module msg {
+    @verbatim (language="comment", text=
+      "舵机转动控制")
+    struct ServoMove {
+      @verbatim (language="comment", text=
+        "舵机ID")
+      uint16 servo_id;
+
+      @verbatim (language="comment", text=
+        "角度位置0~1000")
+      uint16 angle;
+    };
+  };
+};

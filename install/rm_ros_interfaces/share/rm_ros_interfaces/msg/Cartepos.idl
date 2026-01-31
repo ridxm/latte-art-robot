@@ -1,0 +1,15 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from rm_ros_interfaces/msg/Cartepos.msg
+// generated code does not contain a copyright notice
+
+#include "geometry_msgs/msg/Pose.idl"
+
+module rm_ros_interfaces {
+  module msg {
+    struct Cartepos {
+      geometry_msgs::msg::Pose pose;
+
+      boolean follow;
+    };
+  };
+};
