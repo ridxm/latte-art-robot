@@ -55,9 +55,40 @@ scripts/deploy.py             - Inference on robot
 - Keep commit messages short and descriptive
 
 ## Open Questions
-- [ ] R1D2 servo protocol after SSH (need to test)
+- [x] R1D2 servo protocol → **Realman arms** (RM65/RM75 series)
 - [ ] Exact camera mounting positions
 - [ ] Creamer vessel specs (spout angle matters)
+
+## Data Format Issue (CRITICAL)
+
+**Problem**: OpenDroid R1D2 uses Realman arms which don't output LeRobot format natively.
+
+**Solution**: Custom data capture + conversion pipeline:
+1. Capture from Realman Python SDK (`Robotic_Arm` package)
+2. Record camera frames separately
+3. Convert to LeRobot v2 format (parquet + mp4 + metadata)
+
+### Realman SDK
+- Install: `pip install Robotic_Arm`
+- GitHub: https://github.com/RealManRobot/RM_API2
+- Docs: https://develop.realman-robotics.com/en/robot/apipython/getStarted/
+- Supported: RM65, RM75, ECO65, GEN72 series
+
+### LeRobot v2 Format Structure
+```
+dataset/
+├── meta/
+│   ├── info.json          # Dataset metadata
+│   ├── episodes.jsonl     # Episode info
+│   └── tasks.jsonl        # Task descriptions
+├── data/
+│   └── chunk-000/
+│       └── episode_XXXXXX.parquet  # State + action per episode
+└── videos/
+    └── chunk-000/
+        └── observation.images.wrist/
+            └── episode_XXXXXX.mp4
+```
 
 ## Session Log
 
@@ -67,3 +98,11 @@ scripts/deploy.py             - Inference on robot
 - Decided on π0 over ACT for flow matching benefits
 - Created project structure and all scripts
 - Simplified to heart pattern only for hackathon scope
+
+### Session 2 (Data Pipeline)
+- Discovered R1D2 uses Realman arms (RM65/RM75 series)
+- Problem: Realman doesn't output LeRobot format natively
+- Solution: Custom capture + conversion pipeline
+- Created `realman_recorder.py` - captures from Realman SDK + cameras
+- Created `convert_to_lerobot.py` - converts raw → LeRobot v2 format
+- New workflow: Record raw → Convert → Upload to Hub → Train
