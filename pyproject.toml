@@ -1,0 +1,11 @@
+[project]
+name = "latte-art-robot"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "lerobot>=0.4.3",
+    "solo-cli>=0.2.3",
+    "torch>=2.7.1",
+]

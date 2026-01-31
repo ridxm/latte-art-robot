@@ -1,0 +1,56 @@
+# VESSL.ai Run Configuration
+# π0 fine-tuning on H100 for latte art robot
+
+name: latte-art-pi0-training
+
+# Build configuration
+build:
+  dockerfile: Dockerfile
+  context: .
+
+# Resource configuration
+resources:
+  cluster: vessl-gcp-oregon
+  preset: gpu-h100-80g-1  # Single H100 80GB
+
+# Environment variables
+env:
+  # HuggingFace - set these in VESSL secrets
+  - name: HF_TOKEN
+    secret: hf-token
+  # Weights & Biases - set in VESSL secrets
+  - name: WANDB_API_KEY
+    secret: wandb-api-key
+  # Project settings
+  - name: WANDB_PROJECT
+    value: latte-art-robot
+  - name: DATASET_REPO_ID
+    value: ${HF_USERNAME}/latte-heart-demos  # Override in VESSL UI
+
+# Volume mounts for checkpoints and cache
+volumes:
+  - name: checkpoints
+    mount: /app/outputs
+  - name: hf-cache
+    mount: /root/.cache/huggingface
+
+# Run command
+run:
+  - command: |
+      # Login to HuggingFace
+      huggingface-cli login --token $HF_TOKEN
+
+      # Run training
+      python scripts/train.py \
+        --dataset.repo_id=$DATASET_REPO_ID \
+        --output_dir=/app/outputs \
+        --wandb.enable=true \
+        --wandb.project=$WANDB_PROJECT
+
+# Artifacts to save after training
+export:
+  - /app/outputs
+
+# Termination settings
+termination:
+  max_hours: 4  # Safety limit
