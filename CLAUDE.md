@@ -101,8 +101,42 @@ dataset/
 
 ### Session 2 (Data Pipeline)
 - Discovered R1D2 uses Realman arms (RM65/RM75 series)
-- Problem: Realman doesn't output LeRobot format natively
-- Solution: Custom capture + conversion pipeline
-- Created `realman_recorder.py` - captures from Realman SDK + cameras
-- Created `convert_to_lerobot.py` - converts raw → LeRobot v2 format
-- New workflow: Record raw → Convert → Upload to Hub → Train
+- Initially thought we needed custom converter
+- Created `realman_recorder.py` and `convert_to_lerobot.py` (may not be needed)
+
+### Session 3 (Robot SSH Access)
+- SSH: `ssh r2d3@172.20.10.5` (pass: 1234)
+- Working dir: `~/ros2_ws`
+- **GOOD NEWS**: Robot already has LeRobot format data collection!
+  - `src/daniel-teleop/collect_data.py` - kinesthetic teaching collector
+  - `src/daniel-teleop/DataRecoder.py` - outputs LeRobot v3 format
+  - `src/daniel-teleop/upload_to_hf.py` - uploads to HuggingFace
+- Data collection settings:
+  - Rate: 10 Hz
+  - Cameras: top, left_wrist, right_wrist (480x640)
+  - Observations: 12D [l_arm(6), r_arm(6)]
+  - Output: `Data/` folder in LeRobot format
+
+## Robot Commands (On Robot via SSH)
+
+```bash
+# SSH into robot
+ssh r2d3@172.20.10.5
+# password: 1234
+
+# Navigate to workspace
+cd ~/ros2_ws
+
+# Start data collection (kinesthetic teaching)
+cd src/daniel-teleop
+python3 collect_data.py
+
+# Commands during collection:
+#   's' - Start new episode
+#   'y' - Save current episode
+#   'n' - Discard current episode
+#   'q' - Quit
+
+# Upload to HuggingFace (edit repo_id first!)
+python3 upload_to_hf.py
+```
