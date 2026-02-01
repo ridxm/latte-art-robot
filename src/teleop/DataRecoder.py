@@ -183,6 +183,18 @@ class DataRecoder:
             'right_wrist': self.right_wrist       # Right wrist camera
         }
 
+        # Calculate ACTUAL fps based on frames collected and episode duration
+        # This ensures video plays at correct speed regardless of collection rate
+        episode_info = self.get_episode_info()
+        if episode_info and episode_info.get('episode_duration', 0) > 0:
+            num_frames = len(self.top_camera) if self.top_camera else 0
+            actual_fps = num_frames / episode_info['episode_duration']
+            # Clamp to reasonable range and round to integer
+            actual_fps = max(1, min(60, int(round(actual_fps))))
+            print(f"Video FPS: {actual_fps} (actual) vs {self.fps} (target) - {num_frames} frames in {episode_info['episode_duration']:.1f}s")
+        else:
+            actual_fps = self.fps
+
         # Save RGB videos
         for cam_name, buffer_list in rgb_cams.items():
             if not buffer_list:
@@ -193,7 +205,7 @@ class DataRecoder:
             video_file = self._name_helper(f'episode', '.mp4', self.episode_index)
             video_path = os.path.join(cam_video_dir, video_file)
 
-            media.write_video(video_path, buffer_list, fps=self.fps)
+            media.write_video(video_path, buffer_list, fps=actual_fps)
             print(f"Saved {cam_name} RGB video to {video_path}")
     
 

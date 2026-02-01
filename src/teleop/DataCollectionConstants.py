@@ -21,10 +21,10 @@ IMAGE_CHANNELS = 3  # RGB images
 
 # Robot control settings
 ARM_SPEED = 0.5
-RATE = 60  # Data collection frequency (Hz)
+RATE = 15  # Data collection frequency (Hz) - matches slowest camera (RealSense @ 15Hz)
 
 # Episode settings
-MAX_STEPS_PER_EPISODE = 180  # Auto-stop episode after 180 steps (3.0 seconds at 60Hz)
+MAX_STEPS_PER_EPISODE = 800  # Auto-stop episode after 300 steps (20 seconds at 15Hz)
 """
 DataRecoder.py
 
@@ -55,8 +55,8 @@ MetaRecoder.py
 
 SAVE_DIRECTORY_PATH_META - Path to where the Meta files should be stored
 """
-# Save metadata in data folder inside teleop directory
-SAVE_DIRECTORY_PATH_META : str = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data") + "/"
+# Save metadata in meta subfolder for LeRobot v2 format
+SAVE_DIRECTORY_PATH_META : str = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "meta") + "/"
 # Logic for multiple tasks are not yet been implemented! please refer to initializer of MetaRecorder.py
 JOINT_NAMES = 'TODO' # place holder for now
 
