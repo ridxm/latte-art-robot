@@ -9,6 +9,7 @@ def main():
     meta_recorder.generate_info_json()
     meta_recorder.generate_tasks_jsonl()
     meta_recorder.generate_stats_json()
+    meta_recorder.generate_episodes_stats_jsonl()  # Required for v3.0 format
 
 if __name__ == "__main__":
     main()

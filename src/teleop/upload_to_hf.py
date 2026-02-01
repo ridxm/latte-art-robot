@@ -12,10 +12,10 @@ dataset_dir = Path(dataset_path)
 required_files = [
     "meta/info.json",
     "meta/stats.json",
-    "meta/episodes.jsonl",
-    "meta/tasks.jsonl",
-    "data/chunk_000/episode_000000.parquet",
-the]
+    "meta/tasks.parquet",  # v3.0 uses parquet
+    "meta/episodes/chunk-000/file-000.parquet",  # v3.0 episode metadata
+    "data/chunk-000/file-000.parquet",  # v3.0 data format
+]
 
 print("Verifying dataset structure...")
 missing_files = []

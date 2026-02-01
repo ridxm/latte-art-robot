@@ -153,7 +153,7 @@ class MetaRecorder:
         splits = {"train":f"0:{total_episodes}"}
 
         info = {
-            "codebase_version": "v2.1",
+            "codebase_version": "v3.0",
             "robot_type": "realmandoor",
             "total_episodes": total_episodes,
             "total_frames": total_frames,
@@ -395,6 +395,150 @@ class MetaRecorder:
         
         print("WARNING (stats.jsonl): \nstats.jsonl 1) Need to mannually convert bool min max (REQUIRED)")
         
+    def generate_episodes_stats_jsonl(self):
+        """Generate episodes_stats.jsonl required for v3.0 format"""
+        all_files = self._all_data_path_finder()
+        jsonl_data = []
+
+        print("Computing per-episode statistics for episodes_stats.jsonl...")
+
+        for file in tqdm(all_files, desc="Processing episode stats", unit="episode"):
+            df = pd.read_parquet(file)
+            episode_index = int(df['episode_index'].iloc[0])
+
+            # Compute stats for this episode
+            episode_stats = {}
+
+            for col in df.columns:
+                if 'observation.images.' in col:
+                    continue  # Skip image columns, handled separately
+
+                col_data = df[col]
+                sample = col_data.iloc[0]
+
+                if isinstance(sample, (list, tuple, np.ndarray)):
+                    # Array-like data
+                    arr_data = np.array([np.asarray(x, dtype=np.float64).flatten() for x in col_data])
+                    episode_stats[col] = {
+                        "mean": arr_data.mean(axis=0).tolist(),
+                        "std": arr_data.std(axis=0).tolist(),
+                        "min": arr_data.min(axis=0).tolist(),
+                        "max": arr_data.max(axis=0).tolist(),
+                        "count": [len(arr_data)]
+                    }
+                else:
+                    # Scalar data
+                    arr_data = np.array([float(x) for x in col_data], dtype=np.float64)
+                    episode_stats[col] = {
+                        "mean": [float(arr_data.mean())],
+                        "std": [float(arr_data.std())],
+                        "min": [float(arr_data.min())],
+                        "max": [float(arr_data.max())],
+                        "count": [len(arr_data)]
+                    }
+
+            # Add image stats from videos for this episode
+            image_stats = self._compute_single_episode_image_stats(episode_index)
+            episode_stats.update(image_stats)
+
+            jsonl_data.append({
+                "episode_index": episode_index,
+                "stats": episode_stats
+            })
+
+        self._write_data(jsonl_data, SAVE_DIR + "episodes_stats.jsonl")
+        print(f"Generated episodes_stats.jsonl with {len(jsonl_data)} episodes")
+
+    def _compute_single_episode_image_stats(self, episode_index):
+        """Compute image stats for a single episode"""
+        import cv2
+
+        if episode_index < 1000:
+            chunk_folder = "chunk_000"
+        elif episode_index < 2000:
+            chunk_folder = "chunk_001"
+        else:
+            chunk_folder = "chunk_002"
+
+        video_base = os.path.join(os.path.dirname(self.data_folder_path), 'videos')
+        image_stats = {}
+
+        for camera in ['top_camera', 'left_wrist', 'right_wrist']:
+            camera_key = f'observation.images.{camera}'
+            video_dir = os.path.join(video_base, chunk_folder, camera_key)
+            video_file = f'episode_{episode_index:06d}.mp4'
+            video_path = os.path.join(video_dir, video_file)
+
+            if not os.path.exists(video_path):
+                image_stats[camera_key] = {
+                    "min": self._format_for_RGB([0.0, 0.0, 0.0]),
+                    "max": self._format_for_RGB([1.0, 1.0, 1.0]),
+                    "mean": self._format_for_RGB([0.5, 0.5, 0.5]),
+                    "std": self._format_for_RGB([0.25, 0.25, 0.25]),
+                    "count": [0]
+                }
+                continue
+
+            try:
+                cap = cv2.VideoCapture(video_path)
+                sum_vals = np.zeros(3, dtype=np.float64)
+                sum_sq = np.zeros(3, dtype=np.float64)
+                min_vals = np.full(3, np.inf, dtype=np.float64)
+                max_vals = np.full(3, -np.inf, dtype=np.float64)
+                pixel_count = 0
+                frame_count = 0
+
+                while True:
+                    ret, frame = cap.read()
+                    if not ret:
+                        break
+
+                    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    frame_normalized = frame_rgb.astype(np.float32) / 255.0
+                    H, W, C = frame_normalized.shape
+                    flat = frame_normalized.reshape(-1, C)
+
+                    sum_vals += flat.sum(axis=0)
+                    sum_sq += (flat * flat).sum(axis=0)
+                    min_vals = np.minimum(flat.min(axis=0), min_vals)
+                    max_vals = np.maximum(flat.max(axis=0), max_vals)
+                    pixel_count += H * W
+                    frame_count += 1
+
+                cap.release()
+
+                if pixel_count > 0:
+                    mean = (sum_vals / pixel_count).tolist()
+                    var = (sum_sq / pixel_count) - np.square(sum_vals / pixel_count)
+                    var = np.clip(var, 0, None)
+
+                    image_stats[camera_key] = {
+                        "min": self._format_for_RGB(min_vals.tolist()),
+                        "max": self._format_for_RGB(max_vals.tolist()),
+                        "mean": self._format_for_RGB(mean),
+                        "std": self._format_for_RGB(np.sqrt(var).tolist()),
+                        "count": [frame_count]
+                    }
+                else:
+                    image_stats[camera_key] = {
+                        "min": self._format_for_RGB([0.0, 0.0, 0.0]),
+                        "max": self._format_for_RGB([1.0, 1.0, 1.0]),
+                        "mean": self._format_for_RGB([0.5, 0.5, 0.5]),
+                        "std": self._format_for_RGB([0.25, 0.25, 0.25]),
+                        "count": [0]
+                    }
+            except Exception as e:
+                print(f"Error processing {video_path}: {e}")
+                image_stats[camera_key] = {
+                    "min": self._format_for_RGB([0.0, 0.0, 0.0]),
+                    "max": self._format_for_RGB([1.0, 1.0, 1.0]),
+                    "mean": self._format_for_RGB([0.5, 0.5, 0.5]),
+                    "std": self._format_for_RGB([0.25, 0.25, 0.25]),
+                    "count": [0]
+                }
+
+        return image_stats
+
     def generate_tasks_jsonl(self):
         jsonl_data = []
 
