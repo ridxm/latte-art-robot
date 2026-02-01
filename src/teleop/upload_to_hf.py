@@ -4,17 +4,18 @@ from pathlib import Path
 from lerobot.datasets.lerobot_dataset import LeRobotDataset
 
 # Configuration
-repo_id = ""
+repo_id = "dwux/test_data_realman"
 tag = "v3.0"
-dataset_path = "realman_pour1"
+dataset_path = "data"
 
 dataset_dir = Path(dataset_path)
 required_files = [
     "meta/info.json",
     "meta/stats.json",
-    "meta/episodes/chunk-000/file-000.parquet",
-    "meta/tasks.parquet",
-]
+    "meta/episodes.jsonl",
+    "meta/tasks.jsonl",
+    "data/chunk_000/episode_000000.parquet",
+the]
 
 print("Verifying dataset structure...")
 missing_files = []

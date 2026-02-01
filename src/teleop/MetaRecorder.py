@@ -612,7 +612,8 @@ def _process_video_stats_worker(file, data_folder_path):
     # Process each camera video (3 cameras: RGB only)
     for camera in ['top_camera', 'left_wrist', 'right_wrist']:
         # Construct video path
-        video_base = data_folder_path.replace('/data', '/videos')
+        # data_folder_path is .../data/data, videos are at .../data/videos
+        video_base = os.path.join(os.path.dirname(data_folder_path), 'videos')
         video_dir = os.path.join(video_base, chunk_folder, f'observation.images.{camera}')
         # Use .mkv for depth cameras, .mp4 for regular cameras
         video_ext = '.mkv' if 'depth' in camera else '.mp4'
