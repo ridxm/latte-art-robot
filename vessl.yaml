@@ -1,0 +1,28 @@
+name: latte-pi0-training
+description: Train pi0 VLA for latte pouring on dual Realman arms
+
+resources:
+  cluster: vessl-gcp-oregon
+  preset: h100-80gb-1
+
+image:
+  build:
+    context: .
+    dockerfile: Dockerfile
+
+run:
+  - python train.py
+
+volumes:
+  - name: hf-cache
+    mount_path: /root/.cache/huggingface
+
+secrets:
+  - name: hf-token
+    env: HF_TOKEN
+  - name: wandb-api-key
+    env: WANDB_API_KEY
+
+environment:
+  HF_HOME: /root/.cache/huggingface
+  WANDB_PROJECT: latte-pouring
