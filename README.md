@@ -79,9 +79,9 @@ Teaching a robot to pour latte art combines the precision of robotic control wit
 ### How It Works
 
 1. **Direct Teaching**: A human demonstrator wears the kinesthetic backpack and guides the robot's arms through a complete heart pour - from picking up the pitcher to the final wrist tilt that creates the pattern
-2. **Multi-View Recording**: Three cameras (overhead, left wrist, right wrist) capture the scene at 10Hz, giving the model visual context from multiple angles
+2. **Multi-View Recording**: Three cameras (overhead, left wrist, right wrist) capture the scene at 20Hz, giving the model visual context from multiple angles
 3. **Synchronized Data**: The system records joint positions (12D state for both arms), camera frames, and actions simultaneously in LeRobot format
-4. **Quality Over Quantity**: We collected 50+ demonstrations, keeping even "okay" attempts to show variation, but removing spills and major errors
+4. **Quality Over Quantity**: We collected 40 demonstrations, keeping even "okay" attempts to show variation, but removing spills and major errors
 
 ### See It In Action
 
