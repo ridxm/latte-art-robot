@@ -1,5 +1,7 @@
 # Latte Art Robot 🎨☕
 
+Website: https://ridxm.github.io/latte-art-robot/
+
 Pour patterns latte art using OpenDroid R2D3 + π0 VLA.
 
 Project for Physical AI Hack 2026, Jan 31st-Feb -01 2026, hosted at Founders Inc https://luma.com/8ca2z1rr 
