@@ -59,7 +59,7 @@ class TemporalEnsembler:
     exponentially weight recent predictions more heavily.
     """
 
-    def __init__(self, chunk_size: int = 10, action_dim: int = 14, decay: float = 0.5):
+    def __init__(self, chunk_size: int = 20, action_dim: int = 14, decay: float = 0.5):
         """
         Args:
             chunk_size: Number of actions per chunk
@@ -375,7 +375,7 @@ class Pi0RobotController:
         print(f"\n{'='*60}")
         print("AUTONOMOUS LATTE POURING")
         print(f"{'='*60}")
-        print(f"Inference rate: {inference_hz} Hz")
+        print(f"Control rate: {inference_hz} Hz")
         print(f"Max steps: {max_steps}")
         print(f"Temporal ensemble: {self.use_temporal_ensemble}")
         print(f"Action smoothing: {self.use_action_smoothing}")
@@ -452,17 +452,17 @@ def main():
                         help="Path to trained model (local or HF repo)")
     parser.add_argument("--device", default="cuda",
                         help="Device for inference (cuda/cpu)")
-    parser.add_argument("--hz", type=float, default=10.0,
-                        help="Control frequency in Hz")
-    parser.add_argument("--max-steps", type=int, default=400,
-                        help="Maximum steps (400 = 40s at 10Hz)")
+    parser.add_argument("--hz", type=float, default=20.0,
+                        help="Control frequency in Hz (match training data)")
+    parser.add_argument("--max-steps", type=int, default=800,
+                        help="Maximum steps (800 = 40s at 20Hz)")
     parser.add_argument("--no-ensemble", action="store_true",
                         help="Disable temporal ensembling")
     parser.add_argument("--no-smoothing", action="store_true",
                         help="Disable action smoothing")
     parser.add_argument("--smoothing-alpha", type=float, default=0.7,
                         help="Action smoothing factor (0-1, higher=more responsive)")
-    parser.add_argument("--overlap", type=int, default=5,
+    parser.add_argument("--overlap", type=int, default=10,
                         help="Chunk overlap for temporal ensembling")
 
     args = parser.parse_args()
