@@ -1,6 +1,6 @@
-# Heart Latte Art Robot 🎨☕
+# Latte Art Robot 🎨☕
 
-Pour beautiful heart patterns in latte art using OpenDroid R2D3 + π0 VLA.
+Pour patterns latte art using OpenDroid R2D3 + π0 VLA.
 
 ## Quick Start (12-Hour Hackathon)
 
@@ -110,6 +110,54 @@ Each demonstration becomes training data:
 
 After 15,000 training steps on an H100 GPU (~70 minutes), the model can generate autonomous pouring motions that recreate the demonstrated heart patterns.
 
+## Dataset
+
+Our latte art pouring dataset is publicly available on HuggingFace Hub:
+
+**[ridxm/latte-pour-demos](https://huggingface.co/datasets/ridxm/latte-pour-demos)**
+
+### Dataset Statistics
+
+- **Episodes**: 40 demonstrations
+- **Format**: LeRobot v3.0 (Parquet + MP4)
+- **Frequency**: 20 Hz
+- **Duration**: ~20 seconds per episode
+
+### Data Modalities
+
+| Modality | Specification |
+|----------|---------------|
+| **Visual** | 3 cameras (top, left_wrist, right_wrist) @ 640×480 |
+| **Proprioception** | 12D joint states (dual RM65 arms, 6 DOF each) |
+| **Actions** | 12D joint velocities/positions |
+| **Frequency** | 10 Hz synchronized capture |
+
+### Usage
+
+```python
+from lerobot.common.datasets.lerobot_dataset import LeRobotDataset
+
+# Load dataset
+dataset = LeRobotDataset("ridxm/latte-pour-demos")
+
+# Access episode
+episode = dataset[0]
+print(f"State shape: {episode['observation.state'].shape}")  # [12]
+print(f"Action shape: {episode['action'].shape}")           # [12]
+print(f"Cameras: {[k for k in episode.keys() if 'image' in k]}")
+```
+
+### Training
+
+Use this dataset to fine-tune π0 for latte art pouring:
+
+```bash
+python scripts/train.py \
+    --dataset.repo_id=ridxm/latte-pour-demos \
+    --training.offline_steps=15000 \
+    --training.batch_size=32
+```
+
 ## Project Structure
 
 ```
@@ -172,7 +220,11 @@ Using **π0** (Pi-Zero) from Physical Intelligence:
 
 ## Links
 
-- [LeRobot](https://github.com/huggingface/lerobot)
-- [OpenPi](https://github.com/Physical-Intelligence/openpi)
-- [solo-cli](https://github.com/GetSoloTech/solo-cli)
-- [G1 Pouring Dataset](https://huggingface.co/datasets/unitreerobotics/G1_Pouring_Dataset)
+### Resources
+- [LeRobot](https://github.com/huggingface/lerobot) - Framework for robot learning
+- [OpenPi](https://github.com/Physical-Intelligence/openpi) - π0 policy implementation
+- [solo-cli](https://github.com/GetSoloTech/solo-cli) - Robot teleoperation tools
+
+### Datasets
+- [ridxm/latte-pour-demos](https://huggingface.co/datasets/ridxm/latte-pour-demos) - Our latte art dataset (120 episodes)
+- [G1 Pouring Dataset](https://huggingface.co/datasets/unitreerobotics/G1_Pouring_Dataset) - Reference pouring dataset
