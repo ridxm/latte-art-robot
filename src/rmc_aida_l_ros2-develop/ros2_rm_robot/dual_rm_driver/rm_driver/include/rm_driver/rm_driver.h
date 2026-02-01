@@ -53,6 +53,7 @@
 #include "rm_ros_interfaces/msg/jointerrclear.hpp"
 #include "rm_ros_interfaces/msg/gripperset.hpp"
 #include "rm_ros_interfaces/msg/gripperpick.hpp"
+#include "rm_ros_interfaces/msg/gripperstate.hpp"
 #include "rm_ros_interfaces/msg/handangle.hpp"
 #include "rm_ros_interfaces/msg/handforce.hpp"
 #include "rm_ros_interfaces/msg/handposture.hpp"
@@ -372,6 +373,10 @@ private:
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr Set_Gripper_Position_Result;
     /******************************************手爪到达指定位置夹取订阅器*********************************/
     rclcpp::Subscription<rm_ros_interfaces::msg::Gripperset>::SharedPtr Set_Gripper_Position_Cmd;
+    /******************************************夹爪状态发布器 (10Hz)**********************************/
+    rclcpp::Publisher<rm_ros_interfaces::msg::Gripperstate>::SharedPtr Gripper_State_Publisher;
+    rclcpp::TimerBase::SharedPtr gripper_state_timer_;
+    void Gripper_State_Timer_Callback();
 /*****************************************************************end******************************************************************/
 
 /**************************************************************末端工具-五指灵巧手控制******************************************************/

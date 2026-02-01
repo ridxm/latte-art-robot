@@ -14,6 +14,7 @@ rm_ros_interfaces/msg/_forcepositionmovepose.py
 rm_ros_interfaces/msg/_getallframe.py
 rm_ros_interfaces/msg/_gripperpick.py
 rm_ros_interfaces/msg/_gripperset.py
+rm_ros_interfaces/msg/_gripperstate.py
 rm_ros_interfaces/msg/_handangle.py
 rm_ros_interfaces/msg/_handforce.py
 rm_ros_interfaces/msg/_handposture.py

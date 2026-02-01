@@ -7,6 +7,7 @@ from rm_ros_interfaces.msg._forcepositionmovepose import Forcepositionmovepose  
 from rm_ros_interfaces.msg._getallframe import Getallframe  # noqa: F401
 from rm_ros_interfaces.msg._gripperpick import Gripperpick  # noqa: F401
 from rm_ros_interfaces.msg._gripperset import Gripperset  # noqa: F401
+from rm_ros_interfaces.msg._gripperstate import Gripperstate  # noqa: F401
 from rm_ros_interfaces.msg._handangle import Handangle  # noqa: F401
 from rm_ros_interfaces.msg._handforce import Handforce  # noqa: F401
 from rm_ros_interfaces.msg._handposture import Handposture  # noqa: F401

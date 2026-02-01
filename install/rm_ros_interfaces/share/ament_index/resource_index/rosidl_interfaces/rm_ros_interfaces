@@ -16,6 +16,8 @@ msg/Gripperpick.idl
 msg/Gripperpick.msg
 msg/Gripperset.idl
 msg/Gripperset.msg
+msg/Gripperstate.idl
+msg/Gripperstate.msg
 msg/Handangle.idl
 msg/Handangle.msg
 msg/Handforce.idl

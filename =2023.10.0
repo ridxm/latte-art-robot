@@ -1,0 +1,44 @@
+Requirement already satisfied: pandas==2.1.4 in /home/r2d3/.local/lib/python3.10/site-packages (2.1.4)
+Collecting datasets==2.17.1
+  Using cached datasets-2.17.1-py3-none-any.whl.metadata (20 kB)
+Requirement already satisfied: pyarrow in /home/r2d3/.local/lib/python3.10/site-packages (23.0.0)
+Requirement already satisfied: fsspec in /home/r2d3/.local/lib/python3.10/site-packages (2023.10.0)
+Collecting fsspec
+  Using cached fsspec-2026.1.0-py3-none-any.whl.metadata (10 kB)
+Requirement already satisfied: numpy<2,>=1.22.4 in /home/r2d3/.local/lib/python3.10/site-packages (from pandas==2.1.4) (1.26.4)
+Requirement already satisfied: python-dateutil>=2.8.2 in /home/r2d3/.local/lib/python3.10/site-packages (from pandas==2.1.4) (2.9.0.post0)
+Requirement already satisfied: pytz>=2020.1 in /usr/lib/python3/dist-packages (from pandas==2.1.4) (2022.1)
+Requirement already satisfied: tzdata>=2022.1 in /home/r2d3/.local/lib/python3.10/site-packages (from pandas==2.1.4) (2025.3)
+Requirement already satisfied: filelock in /home/r2d3/.local/lib/python3.10/site-packages (from datasets==2.17.1) (3.20.0)
+Requirement already satisfied: pyarrow-hotfix in /home/r2d3/.local/lib/python3.10/site-packages (from datasets==2.17.1) (0.7)
+Requirement already satisfied: dill<0.3.9,>=0.3.0 in /home/r2d3/.local/lib/python3.10/site-packages (from datasets==2.17.1) (0.3.8)
+Requirement already satisfied: requests>=2.19.0 in /home/r2d3/.local/lib/python3.10/site-packages (from datasets==2.17.1) (2.32.5)
+Requirement already satisfied: tqdm>=4.62.1 in /home/r2d3/.local/lib/python3.10/site-packages (from datasets==2.17.1) (4.67.1)
+Requirement already satisfied: xxhash in /home/r2d3/.local/lib/python3.10/site-packages (from datasets==2.17.1) (3.6.0)
+Requirement already satisfied: multiprocess in /home/r2d3/.local/lib/python3.10/site-packages (from datasets==2.17.1) (0.70.16)
+Requirement already satisfied: aiohttp in /home/r2d3/.local/lib/python3.10/site-packages (from datasets==2.17.1) (3.13.2)
+Requirement already satisfied: huggingface-hub>=0.19.4 in /home/r2d3/.local/lib/python3.10/site-packages (from datasets==2.17.1) (0.35.3)
+Requirement already satisfied: packaging in /home/r2d3/.local/lib/python3.10/site-packages (from datasets==2.17.1) (25.0)
+Requirement already satisfied: pyyaml>=5.1 in /usr/local/lib/python3.10/dist-packages (from datasets==2.17.1) (6.0.3)
+Requirement already satisfied: aiohappyeyeballs>=2.5.0 in /home/r2d3/.local/lib/python3.10/site-packages (from aiohttp->datasets==2.17.1) (2.6.1)
+Requirement already satisfied: aiosignal>=1.4.0 in /home/r2d3/.local/lib/python3.10/site-packages (from aiohttp->datasets==2.17.1) (1.4.0)
+Requirement already satisfied: async-timeout<6.0,>=4.0 in /home/r2d3/.local/lib/python3.10/site-packages (from aiohttp->datasets==2.17.1) (4.0.3)
+Requirement already satisfied: attrs>=17.3.0 in /home/r2d3/.local/lib/python3.10/site-packages (from aiohttp->datasets==2.17.1) (25.4.0)
+Requirement already satisfied: frozenlist>=1.1.1 in /home/r2d3/.local/lib/python3.10/site-packages (from aiohttp->datasets==2.17.1) (1.8.0)
+Requirement already satisfied: multidict<7.0,>=4.5 in /home/r2d3/.local/lib/python3.10/site-packages (from aiohttp->datasets==2.17.1) (6.7.0)
+Requirement already satisfied: propcache>=0.2.0 in /home/r2d3/.local/lib/python3.10/site-packages (from aiohttp->datasets==2.17.1) (0.4.1)
+Requirement already satisfied: yarl<2.0,>=1.17.0 in /home/r2d3/.local/lib/python3.10/site-packages (from aiohttp->datasets==2.17.1) (1.22.0)
+Requirement already satisfied: typing-extensions>=4.1.0 in /home/r2d3/.local/lib/python3.10/site-packages (from multidict<7.0,>=4.5->aiohttp->datasets==2.17.1) (4.15.0)
+Requirement already satisfied: idna>=2.0 in /home/r2d3/.local/lib/python3.10/site-packages (from yarl<2.0,>=1.17.0->aiohttp->datasets==2.17.1) (3.11)
+Requirement already satisfied: hf-xet<2.0.0,>=1.1.3 in /home/r2d3/.local/lib/python3.10/site-packages (from huggingface-hub>=0.19.4->datasets==2.17.1) (1.2.0)
+Requirement already satisfied: six>=1.5 in /home/r2d3/.local/lib/python3.10/site-packages (from python-dateutil>=2.8.2->pandas==2.1.4) (1.17.0)
+Requirement already satisfied: charset_normalizer<4,>=2 in /home/r2d3/.local/lib/python3.10/site-packages (from requests>=2.19.0->datasets==2.17.1) (3.4.4)
+Requirement already satisfied: urllib3<3,>=1.21.1 in /home/r2d3/.local/lib/python3.10/site-packages (from requests>=2.19.0->datasets==2.17.1) (2.6.0)
+Requirement already satisfied: certifi>=2017.4.17 in /home/r2d3/.local/lib/python3.10/site-packages (from requests>=2.19.0->datasets==2.17.1) (2025.11.12)
+Using cached datasets-2.17.1-py3-none-any.whl (536 kB)
+Installing collected packages: datasets
+  Attempting uninstall: datasets
+    Found existing installation: datasets 4.1.1
+    Uninstalling datasets-4.1.1:
+      Successfully uninstalled datasets-4.1.1
+Successfully installed datasets-2.17.1

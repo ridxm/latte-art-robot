@@ -37,6 +37,7 @@ set(msg_files
   msg/Jointerrclear.msg
   msg/Gripperpick.msg
   msg/Gripperset.msg
+  msg/Gripperstate.msg
   msg/Handangle.msg
   msg/Handforce.msg
   msg/Handposture.msg

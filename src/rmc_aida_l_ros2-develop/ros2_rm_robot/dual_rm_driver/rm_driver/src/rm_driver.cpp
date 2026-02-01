@@ -1049,6 +1049,26 @@ void RmArm::Arm_Set_Gripper_Position_Callback(const rm_ros_interfaces::msg::Grip
     }
 }
 
+void RmArm::Gripper_State_Timer_Callback()
+{
+    // Read gripper state from hardware and publish
+    GripperState gripper_state;
+    u_int32_t res = Rm_Api.Service_Get_Gripper_State(m_sockhand, &gripper_state);
+
+    if(res == 0)
+    {
+        rm_ros_interfaces::msg::Gripperstate msg;
+        msg.enable_state = gripper_state.enable_state;
+        msg.status = gripper_state.status;
+        msg.error = gripper_state.error;
+        msg.mode = gripper_state.mode;
+        msg.current_force = gripper_state.current_force;
+        msg.temperature = gripper_state.temperature;
+        msg.actpos = gripper_state.actpos;
+        this->Gripper_State_Publisher->publish(msg);
+    }
+}
+
 void RmArm::Arm_Set_Hand_Posture_Callback(const rm_ros_interfaces::msg::Handposture::SharedPtr msg)
 {
     int posture_num;
@@ -1970,6 +1990,11 @@ RmArm::RmArm():
     Set_Gripper_Position_Cmd = this->create_subscription<rm_ros_interfaces::msg::Gripperset>("rm_driver/set_gripper_position_cmd",rclcpp::ParametersQoS(),
         std::bind(&RmArm::Arm_Set_Gripper_Position_Callback,this,std::placeholders::_1),
         sub_opt3);
+    /*****************************************夹爪状态周期发布 (10Hz)**********************************/
+    Gripper_State_Publisher = this->create_publisher<rm_ros_interfaces::msg::Gripperstate>("rm_driver/gripper_state", 10);
+    gripper_state_timer_ = this->create_wall_timer(
+        std::chrono::milliseconds(100),  // 10Hz
+        std::bind(&RmArm::Gripper_State_Timer_Callback, this));
 /*******************************************************************************end*****************************************************************/
 
 /********************************************************************末端工具-五指灵巧手控制************************************************************/

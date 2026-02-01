@@ -1,1 +1,21 @@
-/home/r2d3/ros2_ws/src/joystick_step_control/config/params.yaml
+joystick_step_control_node:
+  ros__parameters:
+    # Speed limits
+    max_linear_speed: 0.5      # m/s
+    max_angular_speed: 2.0     # rad/s
+    
+    # Step sizes per command
+    step_distance: 0.05         # meters
+    step_rotation: 0.5        # radians
+    
+    # Joystick
+    joystick_max: 10.0
+    deadzone: 1.0
+    
+    # Control
+    control_rate: 10.0         # Hz
+    input_timeout: 0.4         # seconds (increased to handle keyboard repeat gaps)
+    
+    # Topics
+    joystick_topic: "/joystick_input"
+    action_server: "/woosh_robot/ros/StepControl"
