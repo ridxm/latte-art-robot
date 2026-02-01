@@ -54,7 +54,7 @@ python scripts/preprocess_z1_to_r2d3.py \
 # Launch π0 fine-tune on H100
 python scripts/train_cloud.py --dataset YOUR_USERNAME/latte-heart-demos
 
-# 15k steps ≈ 60–70 minutes on an H100 (track with wandb)
+# Track training progress with wandb
 ```
 
 ### Phase 4: Deploy (1 hour)
@@ -112,7 +112,7 @@ Each demonstration becomes training data:
 - **Proprioceptive state**: 12D joint angles from both arms
 - **Action trajectories**: Smooth motion sequences the model learns to reproduce
 
-After 15,000 training steps on an H100 GPU (~70 minutes), the model can generate autonomous pouring motions that recreate the demonstrated heart patterns.
+After 15,000 training steps on an H100 GPU, the model should generate autonomous pouring motions that recreate the demonstrated heart patterns.
 
 ## Dataset
 
@@ -180,8 +180,8 @@ The training script (`scripts/train.py`) wraps LeRobot's official training pipel
 --policy.type=pi0                            # Pi-Zero policy
 --policy.pretrained_path=lerobot/pi0_base   # Pre-trained checkpoint
 --policy.chunk_size=20                       # 1s action horizon (20Hz)
---batch_size=32                              # Optimized for H100 80GB
---steps=15000                                # ~70 min on H100
+--batch_size=4                               # Training batch size
+--steps=15000                                # Total training steps
 --policy.dtype=bfloat16                      # Mixed precision for speed
 ```
 
@@ -258,25 +258,25 @@ data/lerobot/
 
 To replicate our training from scratch:
 
-1. **Data Collection** (3-4 hours)
+1. **Data Collection**
    - [ ] Set up R2D3 robot with 3 cameras
    - [ ] Collect 30-50 demonstrations using kinesthetic teaching
    - [ ] Each demo: ~20 seconds of pouring motion
    - [ ] Upload to HuggingFace: `python src/teleop/upload_to_hf.py`
 
-2. **Training Setup** (30 min)
+2. **Training Setup**
    - [ ] Spin up H100 GPU instance (VESSL, Lambda, RunPod)
    - [ ] Install dependencies: `pip install lerobot torch wandb`
    - [ ] Clone repo: `git clone https://github.com/YOUR_USERNAME/latte-art-robot`
    - [ ] Set environment variables: `HF_TOKEN`, `WANDB_API_KEY`
 
-3. **Training** (1-2 hours)
+3. **Training**
    - [ ] Edit `scripts/train.py` to point to your dataset
    - [ ] Run: `python scripts/train.py`
    - [ ] Monitor training on W&B dashboard
    - [ ] Download final checkpoint from `./outputs/pi0_latte/checkpoints/`
 
-4. **Deployment** (1 hour)
+4. **Deployment**
    - [ ] Transfer checkpoint to robot
    - [ ] Run: `python scripts/deploy.py --model ridxm/latte-pi0`
    - [ ] Test pouring with temporal ensembling enabled
@@ -285,7 +285,7 @@ To replicate our training from scratch:
 
 - **Low data regime**: Our 40 episodes benefit from π0's pre-training. For <20 episodes, consider data augmentation
 - **Chunk size**: Set to `fps × desired_lookahead_seconds` (we use 20Hz × 1s = 20)
-- **Batch size**: Scale based on GPU memory (H100 80GB handles 32 easily)
+- **Batch size**: Scale based on GPU memory (smaller batch sizes work well with gradient accumulation)
 - **Convergence**: Training typically plateaus around 10k-15k steps
 - **Checkpointing**: Save every 2500 steps to catch best model early
 

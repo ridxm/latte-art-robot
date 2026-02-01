@@ -409,8 +409,8 @@
                 <div class="stat-label">Action Space</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">70min</div>
-                <div class="stat-label">Training Time</div>
+                <div class="stat-number">15k</div>
+                <div class="stat-label">Training Steps</div>
             </div>
         </div>
     </section>
@@ -543,7 +543,7 @@ print(f"Action shape: {episode['action'].shape}")           # [12]</code></pre>
             <div class="feature">
                 <div class="feature-icon">⚡</div>
                 <h3>H100 Training</h3>
-                <p>15k steps in 70 minutes with bfloat16 mixed precision</p>
+                <p>15k training steps with bfloat16 mixed precision</p>
             </div>
             
             <div class="feature">
@@ -567,7 +567,7 @@ print(f"Action shape: {episode['action'].shape}")           # [12]</code></pre>
             <div class="tech-card">
                 <h3>Training Config</h3>
                 <ul>
-                    <li>Batch size: 32</li>
+                    <li>Batch size: 4</li>
                     <li>Steps: 15,000</li>
                     <li>Chunk size: 20 (1s lookahead)</li>
                     <li>dtype: bfloat16</li>
@@ -593,7 +593,7 @@ print(f"Action shape: {episode['action'].shape}")           # [12]</code></pre>
         
         <div style="max-width: 800px; margin: 0 auto;">
             <div class="tech-card" style="margin-bottom: 2rem;">
-                <h3>1. Data Collection (3-4 hours)</h3>
+                <h3>1. Data Collection</h3>
                 <ul>
                     <li>Set up dual-arm robot with 3 cameras</li>
                     <li>Collect 30-50 kinesthetic demonstrations</li>
@@ -603,7 +603,7 @@ print(f"Action shape: {episode['action'].shape}")           # [12]</code></pre>
             </div>
             
             <div class="tech-card" style="margin-bottom: 2rem;">
-                <h3>2. Training Setup (30 min)</h3>
+                <h3>2. Training Setup</h3>
                 <ul>
                     <li>Spin up H100 GPU (VESSL, Lambda, RunPod)</li>
                     <li>Install: pip install lerobot torch wandb</li>
@@ -612,7 +612,7 @@ print(f"Action shape: {episode['action'].shape}")           # [12]</code></pre>
             </div>
             
             <div class="tech-card" style="margin-bottom: 2rem;">
-                <h3>3. Training (1-2 hours)</h3>
+                <h3>3. Training</h3>
                 <ul>
                     <li>Edit scripts/train.py with your dataset</li>
                     <li>Run: python scripts/train.py</li>
@@ -622,7 +622,7 @@ print(f"Action shape: {episode['action'].shape}")           # [12]</code></pre>
             </div>
             
             <div class="tech-card">
-                <h3>4. Deployment (1 hour)</h3>
+                <h3>4. Deployment</h3>
                 <ul>
                     <li>Transfer checkpoint to robot</li>
                     <li>Run: python scripts/deploy.py --model your-model</li>
