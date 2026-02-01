@@ -33,8 +33,9 @@ class ZEDCameraPublisher(Node):
         os.environ['OPENCV_VIDEOIO_PRIORITY_GSTREAMER'] = '0'
 
         # Try V4L2 backend first (most reliable for ZED on Linux)
+        # ZED 2i is typically at /dev/video0 or /dev/video1
         self.cap = None
-        for device in ['/dev/video6', '/dev/video7', 6, 7]:
+        for device in ['/dev/video0', '/dev/video1', 0, 1]:
             self.get_logger().info(f'Trying device: {device}')
             if isinstance(device, str):
                 self.cap = cv2.VideoCapture(device, cv2.CAP_V4L2)
@@ -49,10 +50,32 @@ class ZEDCameraPublisher(Node):
             self.get_logger().error('Failed to open ZED camera')
             return
 
-        # Set camera properties - use 1344x376 which is known to work
-        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1344)
-        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 376)
-        self.cap.set(cv2.CAP_PROP_FPS, 30)
+        # Try different resolutions - ZED 2i supports various modes
+        # Common ZED side-by-side resolutions: 2560x720, 1344x376, 672x376
+        resolutions = [
+            (2560, 720),   # HD720 side-by-side
+            (1344, 376),   # VGA side-by-side
+            (672, 376),    # QVGA side-by-side
+        ]
+
+        frame_ok = False
+        for width, height in resolutions:
+            self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+            self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+            self.cap.set(cv2.CAP_PROP_FPS, 30)
+
+            # Test read
+            ret, test_frame = self.cap.read()
+            if ret and test_frame is not None:
+                self.get_logger().info(f'ZED working at {width}x{height}, frame shape: {test_frame.shape}')
+                frame_ok = True
+                break
+            else:
+                self.get_logger().info(f'Resolution {width}x{height} failed, trying next...')
+
+        if not frame_ok:
+            self.get_logger().error('Could not read frames at any resolution!')
+            return
 
         # Verify settings
         actual_width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
