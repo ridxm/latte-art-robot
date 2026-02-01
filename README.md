@@ -61,6 +61,55 @@ python scripts/train_cloud.py --dataset YOUR_USERNAME/latte-heart-demos
 python scripts/deploy.py --checkpoint checkpoints/heart-latte-v1/final
 ```
 
+## Data Collection Story
+
+Teaching a robot to pour latte art combines the precision of robotic control with the artistry of barista craft. Our approach uses **kinesthetic teaching** - physically guiding the robot's arms through pouring motions while it records everything it needs to learn.
+
+### The Setup
+
+<p align="center">
+  <img src="data-collection-assets/teleop_rig.JPG" width="45%">
+  <img src="data-collection-assets/data_collection_props.jpg" width="45%">
+</p>
+
+**Left**: The OpenDroid R2D3 robot with dual Realman RM65 arms, equipped with a kinesthetic teaching backpack that allows human demonstrators to guide its movements naturally.
+
+**Right**: Our data collection workspace includes milk pitchers, espresso cups, a milk frother, and all the tools needed to demonstrate dozens of heart pours.
+
+### How It Works
+
+1. **Direct Teaching**: A human demonstrator wears the kinesthetic backpack and guides the robot's arms through a complete heart pour - from picking up the pitcher to the final wrist tilt that creates the pattern
+2. **Multi-View Recording**: Three cameras (overhead, left wrist, right wrist) capture the scene at 10Hz, giving the model visual context from multiple angles
+3. **Synchronized Data**: The system records joint positions (12D state for both arms), camera frames, and actions simultaneously in LeRobot format
+4. **Quality Over Quantity**: We collected 50+ demonstrations, keeping even "okay" attempts to show variation, but removing spills and major errors
+
+### See It In Action
+
+<p align="center">
+  <img src="data-collection-assets/teleop_pour.gif" width="30%">
+  <img src="data-collection-assets/latte_art_pour.gif" width="30%">
+  <img src="data-collection-assets/closeup_pour.gif" width="30%">
+</p>
+
+**Left to Right**: Kinesthetic teaching demonstration, full latte art pour, closeup of the heart pattern formation.
+
+### The Goal
+
+<p align="center">
+  <img src="data-collection-assets/professional-latte-art.JPG" width="60%">
+</p>
+
+Professional heart patterns like these require smooth, coordinated pouring - exactly the kind of fluid motion that π0's flow matching architecture excels at learning. The model learns not just the mechanics of pouring, but the subtle wrist movements and timing that create the distinctive heart shape.
+
+### From Demos to Deployment
+
+Each demonstration becomes training data:
+- **Visual observations**: 3 camera views (640x480) showing workspace, pitcher position, and cup angle
+- **Proprioceptive state**: 12D joint angles from both arms
+- **Action trajectories**: Smooth motion sequences the model learns to reproduce
+
+After 15,000 training steps on an H100 GPU (~70 minutes), the model can generate autonomous pouring motions that recreate the demonstrated heart patterns.
+
 ## Project Structure
 
 ```
