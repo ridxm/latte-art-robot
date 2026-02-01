@@ -7,42 +7,64 @@ Pour beautiful heart patterns in latte art using OpenDroid R2D3 + π0 VLA.
 ### Phase 1: Setup (2 hours)
 
 ```bash
-# 1. Install dependencies
-pip install solo-cli lerobot torch
+# 1. Install dependencies (robot + laptop)
+pip install lerobot torch
 
-# 2. Connect to robot
-ssh r2d3@<robot-ip>
+# 2. SSH into the robot
+ssh r2d3@172.20.10.5  # password 1234
 
-# 3. Calibrate
-solo robo --calibrate all
+# 3. Launch Realman arm drivers (Terminal A)
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 launch rm_driver dual_rm_65_driver.launch.py
 
-# 4. Test teleop
-solo robo --teleop
+# 4. Launch cameras (Terminal B)
+cd ~/ros2_ws/src/teleop
+source /opt/ros/humble/setup.bash
+source ../../install/setup.bash
+python3 launch_drivers.py
 ```
 
 ### Phase 2: Record Demos (3 hours)
 
 ```bash
-# Record 50 heart latte art demonstrations
-python scripts/record_demos.py --num-episodes 50
+# Teleop + data recorder (Terminal C)
+cd ~/ros2_ws/src/teleop
+source /opt/ros/humble/setup.bash
+source ../../install/setup.bash
+python3 collect_data_ros2.py
 
-# Upload to HuggingFace
+# Controls inside collect_data_ros2.py
+#   s = start episode (leader arm or backpack drives follower arm)
+#   y = save, n = discard, r = retry, q = quit
+# Gripper keys 1–9 set 10–90% if you need overrides
+
+# Target 30–50 clean heart pours (≈1.5 min/episode)
+
+# Upload finished dataset to HuggingFace
 huggingface-cli login
 python -m lerobot.scripts.push_dataset_to_hub \
     --local-dir data/latte-heart-demos \
     --repo-id YOUR_USERNAME/latte-heart-demos
 ```
 
-### Phase 3: Train on Cloud (4 hours)
+### Phase 3: Train on Cloud (1 hour)
 
 ```bash
-# On H100 cloud instance
+# Optionally bootstrap coffee pours first (Unitree Z1 dataset)
+python scripts/preprocess_z1_to_r2d3.py \
+    --input-dir data/coffee_raw \
+    --output-dir data/coffee \
+    --overwrite
+
+# Launch π0 fine-tune on H100
 python scripts/train_cloud.py --dataset YOUR_USERNAME/latte-heart-demos
 
-# Training takes ~1-2 hours, monitoring available via wandb
+# 15k steps ≈ 60–70 minutes on an H100 (track with wandb)
 ```
 
-### Phase 4: Deploy (3 hours)
+### Phase 4: Deploy (1 hour)
 
 ```bash
 # Download checkpoint from cloud
@@ -63,6 +85,7 @@ Latte-Pouring-Art/
 │   └── deploy.py             # Inference
 ├── data/                     # Local datasets
 └── checkpoints/              # Trained models
+    └── coffee-pretrain/      # Optional coffee-pour warm start
 ```
 
 ## Hardware Requirements
@@ -83,17 +106,23 @@ Latte-Pouring-Art/
 ## Key Commands
 
 ```bash
-# Calibrate robot
-solo robo --calibrate all
+# Launch Realman drivers (calibrates both arms)
+ros2 launch rm_driver dual_rm_65_driver.launch.py
 
-# Start teleop
-solo robo --teleop
+# Start cameras
+python3 launch_drivers.py
 
-# Record demos
-solo robo --record --dataset-name latte-heart-demos
+# Record demos (teleop backpack or leader arm)
+python3 collect_data_ros2.py
 
-# Check status
-solo status
+# Convert Unitree coffee dataset to Realman layout
+python scripts/preprocess_z1_to_r2d3.py --input-dir data/coffee_raw --output-dir data/coffee
+
+# Train π0 (cloud)
+python scripts/train_cloud.py --dataset YOUR_USERNAME/latte-heart-demos
+
+# Deploy checkpoint
+python scripts/deploy.py --checkpoint checkpoints/heart-latte-v1/final
 ```
 
 ## Model
