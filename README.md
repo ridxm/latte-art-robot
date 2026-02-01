@@ -8,7 +8,7 @@ Project for Physical AI Hack 2026, Jan 31st-Feb -01 2026, hosted at Founders Inc
 
 ## Quick Start (Weekend Hackathon)
 
-### Phase 1: Setup (2 hours)
+### Phase 1: Setup
 
 ```bash
 # 1. Install dependencies (robot + laptop)
@@ -22,7 +22,7 @@ cd ~/ros2_ws/src/teleop
 python3 launch_drivers.py
 ```
 
-### Phase 2: Record Demos (3 hours)
+### Phase 2: Record Demos
 
 ```bash
 # Teleop + data recorder (Terminal B)
@@ -42,7 +42,7 @@ python -m lerobot.scripts.push_dataset_to_hub \
     --repo-id YOUR_USERNAME/latte-heart-demos
 ```
 
-### Phase 3: Train on Cloud (1 hour)
+### Phase 3: Train on Cloud
 
 ```bash
 # Optionally bootstrap coffee pours first (Unitree Z1 dataset)
@@ -57,7 +57,7 @@ python scripts/train_cloud.py --dataset YOUR_USERNAME/latte-heart-demos
 # Track training progress with wandb
 ```
 
-### Phase 4: Deploy (1 hour)
+### Phase 4: Deploy
 
 ```bash
 # Download checkpoint from cloud
