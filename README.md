@@ -130,7 +130,7 @@ Our latte art pouring dataset is publicly available on HuggingFace Hub:
 | **Visual** | 3 cameras (top, left_wrist, right_wrist) @ 640×480 |
 | **Proprioception** | 12D joint states (dual RM65 arms, 6 DOF each) |
 | **Actions** | 12D joint velocities/positions |
-| **Frequency** | 10 Hz synchronized capture |
+| **Frequency** | 20 Hz synchronized capture |
 
 ### Usage
 
@@ -183,7 +183,7 @@ Latte-Pouring-Art/
 
 ## Materials for Demo Recording
 
-- [ ] 15+ espresso cups
+- [ ] wide mouth coffee pitcher
 - [ ] Milk frother + fresh milk
 - [ ] Creamer pitcher with spout
 - [ ] Paper towels
@@ -216,7 +216,7 @@ python scripts/deploy.py --checkpoint checkpoints/heart-latte-v1/final
 Using **π0** (Pi-Zero) from Physical Intelligence:
 - Flow matching for smooth 50Hz actions
 - Pre-trained on 10k+ hours of robot data
-- Fine-tuned on ~50 demonstrations
+- Fine-tuned on ~40 demonstrations
 
 ## Links
 
@@ -226,5 +226,5 @@ Using **π0** (Pi-Zero) from Physical Intelligence:
 - [solo-cli](https://github.com/GetSoloTech/solo-cli) - Robot teleoperation tools
 
 ### Datasets
-- [ridxm/latte-pour-demos](https://huggingface.co/datasets/ridxm/latte-pour-demos) - Our latte art dataset (120 episodes)
+- [ridxm/latte-pour-demos](https://huggingface.co/datasets/ridxm/latte-pour-demos) - Our latte art dataset (40 episodes)
 - [G1 Pouring Dataset](https://huggingface.co/datasets/unitreerobotics/G1_Pouring_Dataset) - Reference pouring dataset
