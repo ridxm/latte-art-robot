@@ -2,7 +2,9 @@
 
 Pour patterns latte art using OpenDroid R2D3 + π0 VLA.
 
-## Quick Start (12-Hour Hackathon)
+Project for Physical AI Hack 2026, Jan 31st-Feb -01 2026, hosted at Founders Inc https://luma.com/8ca2z1rr 
+
+## Quick Start (Weekend Hackathon)
 
 ### Phase 1: Setup (2 hours)
 
