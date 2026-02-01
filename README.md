@@ -13,34 +13,23 @@ pip install lerobot torch
 # 2. SSH into the robot
 ssh r2d3@172.20.10.5  # password 1234
 
-# 3. Launch Realman arm drivers (Terminal A)
-cd ~/ros2_ws
-source /opt/ros/humble/setup.bash
-source install/setup.bash
-ros2 launch rm_driver dual_rm_65_driver.launch.py
-
-# 4. Launch cameras (Terminal B)
+# 3. Launch Realman arm and camera drivers
 cd ~/ros2_ws/src/teleop
-source /opt/ros/humble/setup.bash
-source ../../install/setup.bash
 python3 launch_drivers.py
 ```
 
 ### Phase 2: Record Demos (3 hours)
 
 ```bash
-# Teleop + data recorder (Terminal C)
+# Teleop + data recorder (Terminal B)
 cd ~/ros2_ws/src/teleop
-source /opt/ros/humble/setup.bash
-source ../../install/setup.bash
 python3 collect_data_ros2.py
 
 # Controls inside collect_data_ros2.py
 #   s = start episode (leader arm or backpack drives follower arm)
 #   y = save, n = discard, r = retry, q = quit
-# Gripper keys 1–9 set 10–90% if you need overrides
 
-# Target 30–50 clean heart pours (≈1.5 min/episode)
+# Target 30–50 clean heart pours (≈20s/episode)
 
 # Upload finished dataset to HuggingFace
 huggingface-cli login
