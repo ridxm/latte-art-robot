@@ -160,9 +160,10 @@ class RealmanHardwareBridgeROS2(Node):
         l_arm = self.l_arm_current_angles if self.l_arm_current_angles is not None else [0.0] * 6
         r_arm = self.r_arm_current_angles if self.r_arm_current_angles is not None else [0.0] * 6
 
-        # Normalize gripper position to 0-1 range (from 0-1000)
-        l_gripper_norm = self.l_gripper_position / 1000.0
-        r_gripper_norm = self.r_gripper_position / 1000.0
+        # Normalize gripper position to 0-1 range
+        # Hardware reports: 0=open, 1000=closed, so we invert: 1.0=open, 0.0=closed
+        l_gripper_norm = max(0.0, min(1.0, 1.0 - (self.l_gripper_position / 1000.0)))
+        r_gripper_norm = max(0.0, min(1.0, 1.0 - (self.r_gripper_position / 1000.0)))
 
         # State: [l_arm(6), l_gripper(1), r_arm(6), r_gripper(1)] = 14D
         return np.concatenate([l_arm, [l_gripper_norm], r_arm, [r_gripper_norm]])

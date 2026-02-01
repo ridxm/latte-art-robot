@@ -24,7 +24,7 @@ ARM_SPEED = 0.5
 RATE = 20  # Data collection frequency (Hz) - matches slowest camera (RealSense @ 15Hz)
 
 # Episode settings
-MAX_STEPS_PER_EPISODE = 1200  # Auto-stop episode after 300 steps (20 seconds at 15Hz)
+MAX_STEPS_PER_EPISODE = 400  # Auto-stop episode after 300 steps (20 seconds at 15Hz)
 """
 DataRecoder.py
 

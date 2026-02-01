@@ -154,7 +154,7 @@ class MetaRecorder:
 
         info = {
             "codebase_version": "v3.0",
-            "robot_type": "realmandoor",
+            "robot_type": "realman_dual_arm",
             "total_episodes": total_episodes,
             "total_frames": total_frames,
             "total_tasks": total_tasks,
