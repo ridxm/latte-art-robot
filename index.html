@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Teaching robots to pour latte art using π0 VLA and kinesthetic teaching. Built at Physical AI Hack 2026.">
+    <title>Latte Art Robot | π0 VLA + OpenDroid R2D3</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --bg: #ffffff;
+            --bg-gray: #f9fafb;
+            --border: #e5e7eb;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+        }
+        
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            z-index: 100;
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+        }
+        
+        .hero .description {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        /* Section Container */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        /* Video Grid */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .video-card {
+            text-align: center;
+        }
+        
+        .video-card img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .video-card h3 {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            color: var(--text);
+        }
+        
+        /* Image Grid */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .image-card img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .image-card p {
+            margin-top: 1rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+        
+        .stat-card {
+            padding: 2rem;
+            background: var(--bg-gray);
+            border-radius: 12px;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+        
+        /* Technical Details */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .tech-card {
+            padding: 2rem;
+            background: var(--bg-gray);
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .tech-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .tech-card ul {
+            list-style: none;
+            color: var(--text-light);
+        }
+        
+        .tech-card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .tech-card li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+        
+        /* Code Block */
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        /* Features List */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature {
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature p {
+            color: var(--text-light);
+        }
+        
+        /* Background Sections */
+        .bg-gray {
+            background: var(--bg-gray);
+        }
+        
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.25rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .video-grid,
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">🎨☕ Latte Art Robot</div>
+            <ul class="nav-links">
+                <li><a href="#process">Process</a></li>
+                <li><a href="#dataset">Dataset</a></li>
+                <li><a href="#technical">Technical</a></li>
+                <li><a href="#replicate">Replicate</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Teaching Robots to Pour Latte Art</h1>
+        <p class="subtitle">Using π0 VLA + Kinesthetic Teaching on OpenDroid R2D3</p>
+        <p class="description">
+            A weekend hackathon project that trained a dual-arm robot to pour heart patterns 
+            using vision-language-action models and flow matching.
+        </p>
+        <div class="cta-buttons">
+            <a href="https://huggingface.co/datasets/ridxm/latte-pour-demos" class="btn btn-primary">
+                📊 View Dataset
+            </a>
+            <a href="https://github.com/ridxm/latte-art-robot" class="btn btn-secondary">
+                💻 GitHub Repo
+            </a>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="section">
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">40</div>
+                <div class="stat-label">Demonstrations</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">20Hz</div>
+                <div class="stat-label">Control Frequency</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">12D</div>
+                <div class="stat-label">Action Space</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">70min</div>
+                <div class="stat-label">Training Time</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="section bg-gray">
+        <h2 class="section-title">The Process</h2>
+        <p class="section-subtitle">From human demonstration to autonomous pouring</p>
+        
+        <div class="video-grid">
+            <div class="video-card">
+                <img src="data-collection-assets/teleop_pour.gif" alt="Kinesthetic teaching">
+                <h3>1. Kinesthetic Teaching</h3>
+                <p>Human guides robot arms through pouring motions</p>
+            </div>
+            <div class="video-card">
+                <img src="data-collection-assets/latte_art_pour.gif" alt="Full pour">
+                <h3>2. Data Collection</h3>
+                <p>3 cameras + 12D joint states at 20Hz</p>
+            </div>
+            <div class="video-card">
+                <img src="data-collection-assets/closeup_pour.gif" alt="Heart formation">
+                <h3>3. Heart Formation</h3>
+                <p>Learning subtle wrist movements and timing</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Setup Section -->
+    <section class="section">
+        <h2 class="section-title">The Setup</h2>
+        <p class="section-subtitle">Hardware and workspace configuration</p>
+        
+        <div class="image-grid">
+            <div class="image-card">
+                <img src="data-collection-assets/teleop_rig.JPG" alt="Robot setup">
+                <p><strong>OpenDroid R2D3</strong> with dual Realman RM65 arms and kinesthetic teaching backpack. 
+                The backpack allows demonstrators to physically guide the robot's movements naturally.</p>
+            </div>
+            <div class="image-card">
+                <img src="data-collection-assets/data_collection_props.jpg" alt="Props">
+                <p><strong>Data Collection Props:</strong> Milk pitchers, espresso cups, milk frother, and all 
+                tools needed for demonstrating professional latte art pours.</p>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 3rem;">
+            <img src="data-collection-assets/professional-latte-art.JPG" 
+                 alt="Professional latte art" 
+                 style="max-width: 600px; width: 100%; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            <p style="margin-top: 1rem; color: var(--text-light);">
+                <strong>The Goal:</strong> Professional heart patterns requiring smooth, coordinated pouring
+            </p>
+        </div>
+    </section>
+
+    <!-- Dataset Section -->
+    <section id="dataset" class="section bg-gray">
+        <h2 class="section-title">Dataset</h2>
+        <p class="section-subtitle">Publicly available on HuggingFace Hub</p>
+        
+        <div class="tech-grid">
+            <div class="tech-card">
+                <h3>📊 Dataset Stats</h3>
+                <ul>
+                    <li>40 episodes</li>
+                    <li>~20 seconds per episode</li>
+                    <li>LeRobot v3.0 format</li>
+                    <li>Parquet + MP4 videos</li>
+                </ul>
+            </div>
+            
+            <div class="tech-card">
+                <h3>👁️ Visual Data</h3>
+                <ul>
+                    <li>3 camera views</li>
+                    <li>640×480 resolution</li>
+                    <li>top, left_wrist, right_wrist</li>
+                    <li>20Hz synchronized</li>
+                </ul>
+            </div>
+            
+            <div class="tech-card">
+                <h3>🤖 Proprioception</h3>
+                <ul>
+                    <li>12D joint states</li>
+                    <li>Dual RM65 arms (6 DOF each)</li>
+                    <li>Position + velocity</li>
+                    <li>Gripper state included</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="code-block">
+            <pre><code># Load the dataset
+from lerobot.common.datasets.lerobot_dataset import LeRobotDataset
+
+dataset = LeRobotDataset("ridxm/latte-pour-demos")
+episode = dataset[0]
+
+print(f"State shape: {episode['observation.state'].shape}")  # [12]
+print(f"Action shape: {episode['action'].shape}")           # [12]</code></pre>
+        </div>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="https://huggingface.co/datasets/ridxm/latte-pour-demos" class="btn btn-primary">
+                View on HuggingFace →
+            </a>
+        </div>
+    </section>
+
+    <!-- Technical Section -->
+    <section id="technical" class="section">
+        <h2 class="section-title">Technical Details</h2>
+        <p class="section-subtitle">Built on π0 VLA with flow matching</p>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🧠</div>
+                <h3>π0 Policy</h3>
+                <p>Pre-trained VLA from Physical Intelligence with 10k+ hours of robot data</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">🌊</div>
+                <h3>Flow Matching</h3>
+                <p>Generates smooth, continuous action sequences for fluid pouring motions</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h3>H100 Training</h3>
+                <p>15k steps in 70 minutes with bfloat16 mixed precision</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">🎯</div>
+                <h3>Temporal Ensemble</h3>
+                <p>Overlapping action chunks with exponential weighting for smooth execution</p>
+            </div>
+        </div>
+        
+        <div class="tech-grid">
+            <div class="tech-card">
+                <h3>Architecture</h3>
+                <ul>
+                    <li>Input: 3 cameras + 12D state</li>
+                    <li>Output: 12D actions (chunk_size=20)</li>
+                    <li>Pretrained: lerobot/pi0_base</li>
+                    <li>Fine-tuned on 40 demos</li>
+                </ul>
+            </div>
+            
+            <div class="tech-card">
+                <h3>Training Config</h3>
+                <ul>
+                    <li>Batch size: 32</li>
+                    <li>Steps: 15,000</li>
+                    <li>Chunk size: 20 (1s lookahead)</li>
+                    <li>dtype: bfloat16</li>
+                </ul>
+            </div>
+            
+            <div class="tech-card">
+                <h3>Deployment</h3>
+                <ul>
+                    <li>Inference: 20Hz on robot</li>
+                    <li>Action smoothing: EMA filter</li>
+                    <li>Temporal ensembling enabled</li>
+                    <li>ROS2 Humble integration</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Replicate Section -->
+    <section id="replicate" class="section bg-gray">
+        <h2 class="section-title">Replicate This Project</h2>
+        <p class="section-subtitle">Complete guide to train your own latte art robot</p>
+        
+        <div style="max-width: 800px; margin: 0 auto;">
+            <div class="tech-card" style="margin-bottom: 2rem;">
+                <h3>1. Data Collection (3-4 hours)</h3>
+                <ul>
+                    <li>Set up dual-arm robot with 3 cameras</li>
+                    <li>Collect 30-50 kinesthetic demonstrations</li>
+                    <li>Each demo: ~20 seconds of pouring</li>
+                    <li>Upload to HuggingFace Hub</li>
+                </ul>
+            </div>
+            
+            <div class="tech-card" style="margin-bottom: 2rem;">
+                <h3>2. Training Setup (30 min)</h3>
+                <ul>
+                    <li>Spin up H100 GPU (VESSL, Lambda, RunPod)</li>
+                    <li>Install: pip install lerobot torch wandb</li>
+                    <li>Clone repo and set HF_TOKEN</li>
+                </ul>
+            </div>
+            
+            <div class="tech-card" style="margin-bottom: 2rem;">
+                <h3>3. Training (1-2 hours)</h3>
+                <ul>
+                    <li>Edit scripts/train.py with your dataset</li>
+                    <li>Run: python scripts/train.py</li>
+                    <li>Monitor on W&B dashboard</li>
+                    <li>Download checkpoint</li>
+                </ul>
+            </div>
+            
+            <div class="tech-card">
+                <h3>4. Deployment (1 hour)</h3>
+                <ul>
+                    <li>Transfer checkpoint to robot</li>
+                    <li>Run: python scripts/deploy.py --model your-model</li>
+                    <li>Test with temporal ensembling</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="code-block">
+            <pre><code># Quick start training
+git clone https://github.com/ridxm/latte-art-robot
+cd latte-art-robot
+pip install lerobot torch wandb
+
+# Set your dataset
+# Edit scripts/train.py: --dataset.repo_id=YOUR_USERNAME/your-dataset
+
+python scripts/train.py</code></pre>
+        </div>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="https://github.com/ridxm/latte-art-robot" class="btn btn-primary">
+                View Full Documentation →
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>Latte Art Robot</strong></p>
+        <p>Built at Physical AI Hack 2026 (Jan 31 - Feb 1) @ Founders Inc</p>
+        <p style="margin-top: 1rem; opacity: 0.8;">
+            Using π0 from <a href="https://www.physicalintelligence.company/">Physical Intelligence</a> 
+            and <a href="https://github.com/huggingface/lerobot">LeRobot</a> from HuggingFace
+        </p>
+        
+        <div class="footer-links">
+            <a href="https://huggingface.co/datasets/ridxm/latte-pour-demos">Dataset</a>
+            <a href="https://huggingface.co/ridxm/latte-pi0">Model</a>
+            <a href="https://github.com/ridxm/latte-art-robot">GitHub</a>
+            <a href="https://luma.com/8ca2z1rr">Hackathon</a>
+        </div>
+    </footer>
+</body>
+</html>
